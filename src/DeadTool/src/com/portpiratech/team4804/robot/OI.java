@@ -1,9 +1,10 @@
 
 package com.portpiratech.team4804.robot;
 
-import com.portpiratech.xbox360.XboxController;
 import com.portpiratech.team4804.robot.commands.ExtendPiston;
+import com.portpiratech.team4804.robot.commands.LoadContainer;
 import com.portpiratech.team4804.robot.commands.RetractPiston;
+import com.portpiratech.xbox360.XboxController;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -17,6 +18,7 @@ public class OI {
         // Connect the buttons to commands
     	xbox.getAButton().whileHeld(new ExtendPiston());
         xbox.getBButton().whileHeld(new RetractPiston());
+        xbox.getXButton().whenPressed(new LoadContainer());
     }
     
     /**

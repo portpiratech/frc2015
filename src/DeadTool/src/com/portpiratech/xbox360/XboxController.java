@@ -52,4 +52,12 @@ public class XboxController extends Joystick{
 	public JoystickButton getBButton(){
 		return new JoystickButton(this, 2);
 	}
+	
+	/**
+	 * This method returns the X Button from the XBox Controller
+	 * @return JoystickButton Mapped to Button X on Xbox Controller
+	 */
+	public JoystickButton getXButton(){
+		return new JoystickButton(this, 3);
+	}
 }

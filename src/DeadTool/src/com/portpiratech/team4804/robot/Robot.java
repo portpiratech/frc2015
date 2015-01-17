@@ -8,8 +8,9 @@
 package com.portpiratech.team4804.robot;
 
 import com.portpiratech.team4804.robot.commands.Autonomous;
-import com.portpiratech.team4804.robot.subsystems.PistonTestSubsystem;
 import com.portpiratech.team4804.robot.subsystems.DriveTrain;
+import com.portpiratech.team4804.robot.subsystems.LoadingSubsystem;
+import com.portpiratech.team4804.robot.subsystems.PistonTestSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -30,6 +31,8 @@ public class Robot extends IterativeRobot {
     public static PistonTestSubsystem pistonTestSubsystem;
     public static DriveTrain drivetrain;
     public static OI oi;
+    public static LoadingSubsystem loadingSubsystem;
+    
 
     /**
      * This function is run when the robot is first started up and should be
@@ -40,6 +43,7 @@ public class Robot extends IterativeRobot {
         drivetrain = new DriveTrain();
         pistonTestSubsystem = new PistonTestSubsystem();
         oi = new OI();
+        loadingSubsystem = new LoadingSubsystem();
         
         // instantiate the command used for the autonomous period
         autonomousCommand = new Autonomous();
