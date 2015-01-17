@@ -17,7 +17,7 @@ public class LoadingSubsystem extends Subsystem {
 	
 	DigitalInput limitSwitch = new DigitalInput(0);
 	Counter counter = new Counter(limitSwitch);
-	Talon motor = new Talon(0);
+	Talon motor = new Talon(2);
 	
 	
     public void initDefaultCommand() {
