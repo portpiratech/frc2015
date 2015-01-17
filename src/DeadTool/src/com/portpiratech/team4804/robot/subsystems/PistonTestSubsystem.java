@@ -17,10 +17,6 @@ public class PistonTestSubsystem extends Subsystem {
 	public PistonTestSubsystem() {
 		super();
 		solenoid = new DoubleSolenoid(0,1);
-		
-	
-		
-		
 	}
 
 	/**

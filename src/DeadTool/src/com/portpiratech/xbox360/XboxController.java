@@ -3,11 +3,16 @@ package com.portpiratech.xbox360;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+/**
+ * Class which adds helper methods to better use an XBox Controller without having
+ * to do so much configuration within a FRC 2015 Robot.
+ * @author PortPiratech
+ *
+ */
 public class XboxController extends Joystick{
 
 	/**
-	 * Class which adds helper methods to better use an XBox Controller without having
-	 * to do so much configuration within a FRC 2015 Robot.
+	 * Constructor which takes the XBox Controller port and calls super class.
 	 * 
 	 * @param port that Xbox Controller is configured on.
 	 */
@@ -47,6 +52,4 @@ public class XboxController extends Joystick{
 	public JoystickButton getBButton(){
 		return new JoystickButton(this, 2);
 	}
-	
-	
 }

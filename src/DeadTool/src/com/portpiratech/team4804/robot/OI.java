@@ -19,7 +19,12 @@ public class OI {
         xbox.getBButton().whileHeld(new RetractPiston());
     }
     
-    public XboxController getJoystick() {
+    /**
+     * Method to retrieve First XBox Controller
+     * 
+     * @return XBox Controller One
+     */
+    public XboxController getJoystickOne() {
         return xbox;
     }
 
