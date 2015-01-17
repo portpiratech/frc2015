@@ -16,4 +16,14 @@ public class XboxController extends Joystick{
 	public double getRightStickYAxis(){
 		return getRawAxis(5);
 	}
+	
+	public boolean isAButtonPressed(){
+		return getRawButton(0);
+	}
+	
+	public boolean isXButtonPressed(){
+		return getRawButton(2);
+	}
+	
+	
 }

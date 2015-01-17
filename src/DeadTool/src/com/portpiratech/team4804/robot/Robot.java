@@ -8,6 +8,7 @@
 package com.portpiratech.team4804.robot;
 
 import com.portpiratech.team4804.robot.commands.Autonomous;
+import com.portpiratech.team4804.robot.subsystems.PistonTestSubsystem;
 import com.portpiratech.team4804.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -26,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
+    public static PistonTestSubsystem pistonTestSubsystem;
     public static DriveTrain drivetrain;
     public static OI oi;
 
@@ -36,7 +38,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         // Initialize all subsystems
         drivetrain = new DriveTrain();
-      
+        pistonTestSubsystem = new PistonTestSubsystem();
         oi = new OI();
         
         // instantiate the command used for the autonomous period

@@ -2,6 +2,8 @@
 package com.portpiratech.team4804.robot;
 
 import com.portpiratech.xbox360.XboxController;
+import com.portpiratech.team4804.robot.commands.ExtendPiston;
+import com.portpiratech.team4804.robot.commands.RetractPiston;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -13,6 +15,15 @@ public class OI {
     public OI() {
     	        
         // Connect the buttons to commands
+    	if(xbox.isAButtonPressed() == true){
+    		new ExtendPiston();
+    		
+    		
+    	}
+    	
+    	if(xbox.isXButtonPressed() == true){
+    		new RetractPiston();
+    	}
        
        
     }
@@ -20,5 +31,6 @@ public class OI {
     public XboxController getJoystick() {
         return xbox;
     }
+
 }
 
