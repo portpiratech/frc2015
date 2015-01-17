@@ -1,6 +1,7 @@
 package com.portpiratech.xbox360;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class XboxController extends Joystick{
 
@@ -17,12 +18,12 @@ public class XboxController extends Joystick{
 		return getRawAxis(5);
 	}
 	
-	public boolean isAButtonPressed(){
-		return getRawButton(0);
+	public JoystickButton getAButton(){
+		return new JoystickButton(this,1);
 	}
 	
-	public boolean isXButtonPressed(){
-		return getRawButton(2);
+	public JoystickButton getBButton(){
+		return new JoystickButton(this, 2);
 	}
 	
 	

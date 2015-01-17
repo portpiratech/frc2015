@@ -15,17 +15,8 @@ public class OI {
     public OI() {
     	        
         // Connect the buttons to commands
-    	if(xbox.isAButtonPressed() == true){
-    		new ExtendPiston();
-    		
-    		
-    	}
-    	
-    	if(xbox.isXButtonPressed() == true){
-    		new RetractPiston();
-    	}
-       
-       
+    	xbox.getAButton().whileHeld(new ExtendPiston());
+        xbox.getBButton().whileHeld(new RetractPiston());
     }
     
     public XboxController getJoystick() {
