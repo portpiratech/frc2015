@@ -32,12 +32,21 @@ public class LoadingSubsystem extends Subsystem {
     
     // Method Load this will execute the motor to drive 
     public void load() {
-    	motor.set(0.5);
+    	if(isSwitchPressed() == false) { 
+    		motor.set(0.5);
+    	}
     }
     
     // Is switch thrown? (counter > 1)    
     public boolean getSwitchStatus() {
+    	if(isSwitchPressed()) {
+    		return true;
+    	}
     	return counter.get() > 0;
+    }
+    
+    public boolean isSwitchPressed() {
+    	return limitSwitch.get();
     }
     
     // Stop loading
