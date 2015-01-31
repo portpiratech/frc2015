@@ -7,13 +7,9 @@ package com.portpiratech.team4804.robot.commands;
 import com.portpiratech.team4804.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 3e8eef7da34d34c50830ccae585ba7e655b4340d
-public class RetractPiston extends Command {
+public class StopPiston extends Command {
     
-    public RetractPiston() {
+    public StopPiston() {
         requires(Robot.pistonTestSubsystem);
     }
 
@@ -22,7 +18,7 @@ public class RetractPiston extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.pistonTestSubsystem.retract();
+        Robot.pistonTestSubsystem.stop();
     }
 
     // Make this return true when this Command no longer needs to run execute()

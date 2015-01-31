@@ -7,17 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LoadContainer extends Command {
+public class LoadTote extends Command {
 
-    public LoadContainer() {
+    public LoadTote() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.loadingSubsystem);
+        requires(Robot.toteSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.loadingSubsystem.initializeCounter();
-    	Robot.loadingSubsystem.load();
+    	Robot.toteSubsystem.initializeCounter();
+    	Robot.toteSubsystem.load();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -26,12 +26,12 @@ public class LoadContainer extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.loadingSubsystem.getSwitchStatus();
+        return Robot.toteSubsystem.getSwitchStatus();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.loadingSubsystem.stop();
+    	Robot.toteSubsystem.stop();
     }
 
     // Called when another command which requires one or more of the same

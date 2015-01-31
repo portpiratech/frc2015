@@ -46,7 +46,7 @@ public class DriveTrain extends Subsystem {
 	 * @param right Speed in range [-1,1]
 	 */
 	public void drive(double left, double right) {
-		drive.tankDrive(left, right);
+		drive.tankDrive(-left, -right);
 	}
 
 	/**

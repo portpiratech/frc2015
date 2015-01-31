@@ -24,7 +24,11 @@ public class ExtendPiston extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+<<<<<<< HEAD
         return false; // Runs until interrupted, Xbox controller determines when finished
+=======
+        return false; 
+>>>>>>> 3e8eef7da34d34c50830ccae585ba7e655b4340d
     }
 
     // Called once after isFinished returns true

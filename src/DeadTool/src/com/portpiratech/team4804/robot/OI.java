@@ -2,8 +2,9 @@
 package com.portpiratech.team4804.robot;
 
 import com.portpiratech.team4804.robot.commands.ExtendPiston;
-import com.portpiratech.team4804.robot.commands.LoadContainer;
+import com.portpiratech.team4804.robot.commands.LoadTote;
 import com.portpiratech.team4804.robot.commands.RetractPiston;
+import com.portpiratech.team4804.robot.commands.UnloadTote;
 import com.portpiratech.xbox360.XboxController;
 
 /**
@@ -18,10 +19,17 @@ public class OI {
 
     public OI() {
         // Connect the buttons to commands
+<<<<<<< HEAD
     	operatorController.getAButton().whileHeld(new ExtendPiston());
     	operatorController.getBButton().whileHeld(new RetractPiston());
     	operatorController.getXButton().whenPressed(new LoadContainer());
         operatorController.getYButton().whenPressed(new ExtendPiston());
+=======
+    	xbox.getAButton().whileHeld(new ExtendPiston());
+        xbox.getBButton().whileHeld(new RetractPiston());
+        xbox.getXButton().whenPressed(new LoadTote());
+        xbox.getYButton().whileHeld(new UnloadTote());
+>>>>>>> 3e8eef7da34d34c50830ccae585ba7e655b4340d
     }
     
     /**
