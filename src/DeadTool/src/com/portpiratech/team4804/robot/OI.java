@@ -23,7 +23,6 @@ public class OI {
     	operatorController.getBButton().whileHeld(new RetractPiston());
     	operatorController.getXButton().whenPressed(new LoadTote());
         operatorController.getYButton().whileHeld(new UnloadTote());
-
     }
     
     /**
