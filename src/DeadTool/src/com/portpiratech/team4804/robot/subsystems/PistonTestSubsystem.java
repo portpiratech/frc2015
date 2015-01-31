@@ -4,15 +4,11 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-
-<<<<<<< HEAD
-=======
 /**
  * The DriveTrain subsystem incorporates the sensors and actuators attached to
  * the robots chassis. These include four drive motors, a left and right encoder
  * and a gyro.
  */
->>>>>>> 3e8eef7da34d34c50830ccae585ba7e655b4340d
 public class PistonTestSubsystem extends Subsystem {
 	
 	private DoubleSolenoid solenoid;

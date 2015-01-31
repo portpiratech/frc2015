@@ -19,17 +19,11 @@ public class OI {
 
     public OI() {
         // Connect the buttons to commands
-<<<<<<< HEAD
     	operatorController.getAButton().whileHeld(new ExtendPiston());
     	operatorController.getBButton().whileHeld(new RetractPiston());
-    	operatorController.getXButton().whenPressed(new LoadContainer());
-        operatorController.getYButton().whenPressed(new ExtendPiston());
-=======
-    	xbox.getAButton().whileHeld(new ExtendPiston());
-        xbox.getBButton().whileHeld(new RetractPiston());
-        xbox.getXButton().whenPressed(new LoadTote());
-        xbox.getYButton().whileHeld(new UnloadTote());
->>>>>>> 3e8eef7da34d34c50830ccae585ba7e655b4340d
+    	operatorController.getXButton().whenPressed(new LoadTote());
+        operatorController.getYButton().whileHeld(new UnloadTote());
+
     }
     
     /**

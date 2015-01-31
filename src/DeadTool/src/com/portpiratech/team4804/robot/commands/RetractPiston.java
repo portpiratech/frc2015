@@ -7,10 +7,6 @@ package com.portpiratech.team4804.robot.commands;
 import com.portpiratech.team4804.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 3e8eef7da34d34c50830ccae585ba7e655b4340d
 public class RetractPiston extends Command {
     
     public RetractPiston() {
