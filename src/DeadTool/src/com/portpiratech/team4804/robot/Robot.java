@@ -9,7 +9,7 @@ package com.portpiratech.team4804.robot;
 
 import com.portpiratech.team4804.robot.commands.Autonomous;
 import com.portpiratech.team4804.robot.subsystems.DriveTrain;
-import com.portpiratech.team4804.robot.subsystems.LoadingSubsystem;
+import com.portpiratech.team4804.robot.subsystems.ToteSubsystem;
 import com.portpiratech.team4804.robot.subsystems.PistonTestSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -31,7 +31,7 @@ public class Robot extends IterativeRobot {
     public static PistonTestSubsystem pistonTestSubsystem;
     public static DriveTrain drivetrain;
     public static OI oi;
-    public static LoadingSubsystem loadingSubsystem;
+    public static ToteSubsystem toteSubsystem;
     
 
     /**
@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
         // Initialize all subsystems
         drivetrain = new DriveTrain();
         pistonTestSubsystem = new PistonTestSubsystem();
-        loadingSubsystem = new LoadingSubsystem();
+        toteSubsystem = new ToteSubsystem();
         oi = new OI();
 
         

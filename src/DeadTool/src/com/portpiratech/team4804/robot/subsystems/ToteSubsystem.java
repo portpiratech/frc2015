@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class LoadingSubsystem extends Subsystem {
+public class ToteSubsystem extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -17,7 +17,7 @@ public class LoadingSubsystem extends Subsystem {
 	
 	DigitalInput limitSwitch = new DigitalInput(0);
 	Counter counter = new Counter(limitSwitch);
-	Talon motor = new Talon(2);
+	Talon motor = new Talon(3);
 	
 	
     public void initDefaultCommand() {
@@ -37,6 +37,10 @@ public class LoadingSubsystem extends Subsystem {
     	}
     }
     
+    public void unload() {
+    	motor.set(-0.5);
+    }
+    
     // Is switch thrown? (counter > 1)    
     public boolean getSwitchStatus() {
     	if(isSwitchPressed()) {
@@ -50,7 +54,7 @@ public class LoadingSubsystem extends Subsystem {
     }
     
     // Stop loading
-    public void stop(){
+    public void stop() {
     	motor.set(0.0);
     }
     
