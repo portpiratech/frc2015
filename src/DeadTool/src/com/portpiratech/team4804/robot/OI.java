@@ -11,14 +11,17 @@ import com.portpiratech.xbox360.XboxController;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    private XboxController xbox = new XboxController(0);
+    private static final int OPERATOR_CONTROLLER_PORT = 1;
+	private static final int DRIVER_CONTROLLER_PORT = 0;
+	private XboxController driverController = new XboxController(DRIVER_CONTROLLER_PORT);
+    private XboxController operatorController = new XboxController(OPERATOR_CONTROLLER_PORT);
 
     public OI() {
-    	        
         // Connect the buttons to commands
-    	xbox.getAButton().whileHeld(new ExtendPiston());
-        xbox.getBButton().whileHeld(new RetractPiston());
-        xbox.getXButton().whenPressed(new LoadContainer());
+    	operatorController.getAButton().whileHeld(new ExtendPiston());
+    	operatorController.getBButton().whileHeld(new RetractPiston());
+    	operatorController.getXButton().whenPressed(new LoadContainer());
+        operatorController.getYButton().whenPressed(new ExtendPiston());
     }
     
     /**
@@ -26,9 +29,10 @@ public class OI {
      * 
      * @return XBox Controller One
      */
-    public XboxController getJoystickOne() {
-        return xbox;
+    public XboxController getDriverController() {
+        return driverController;
     }
-
+    public XboxController getOperatorController() {
+        return operatorController;
+    }
 }
-

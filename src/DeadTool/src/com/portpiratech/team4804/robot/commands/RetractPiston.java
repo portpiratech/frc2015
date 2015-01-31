@@ -7,16 +7,14 @@ package com.portpiratech.team4804.robot.commands;
 import com.portpiratech.team4804.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Have the robot drive tank style using the PS3 Joystick until interrupted.
- */
+
 public class RetractPiston extends Command {
     
     public RetractPiston() {
         requires(Robot.pistonTestSubsystem);
     }
 
-    // Called just before this Command runs the f iirst time
+    // Called just before this Command runs the first time
     protected void initialize() {}
 
     // Called repeatedly when this Command is scheduled to run

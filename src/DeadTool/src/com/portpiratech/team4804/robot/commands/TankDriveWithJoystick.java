@@ -8,7 +8,7 @@ import com.portpiratech.team4804.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Have the robot drive tank style using the PS3 Joystick until interrupted.
+ * Have the robot drive tank style using the Xbox Joystick until interrupted.
  */
 public class TankDriveWithJoystick extends Command {
     
@@ -16,12 +16,12 @@ public class TankDriveWithJoystick extends Command {
         requires(Robot.drivetrain);
     }
 
-    // Called just before this Command runs the f iirst time
+    // Called just before this Command runs the first time
     protected void initialize() {}
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.drivetrain.drive(Robot.oi.getJoystickOne());
+        Robot.drivetrain.drive(Robot.oi.getDriverController());
     }
 
     // Make this return true when this Command no longer needs to run execute()
