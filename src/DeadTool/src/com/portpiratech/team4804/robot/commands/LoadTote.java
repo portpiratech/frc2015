@@ -17,7 +17,7 @@ public class LoadTote extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.toteSubsystem.initializeCounter();
-    	Robot.toteSubsystem.load();
+    	Robot.toteSubsystem.load(Robot.oi.getOperatorController());	
     }
 
     // Called repeatedly when this Command is scheduled to run

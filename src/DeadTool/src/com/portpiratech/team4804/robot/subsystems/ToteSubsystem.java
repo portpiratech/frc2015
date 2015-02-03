@@ -1,5 +1,7 @@
 package com.portpiratech.team4804.robot.subsystems;
 
+import com.portpiratech.xbox360.XboxController;
+
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
@@ -13,11 +15,12 @@ public class ToteSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	// We will need a DigitalInput, Counter, Motor(Talon)
+	// We will need a DigistalInput, Counter, Motor(Talon)
 	
 	DigitalInput limitSwitch = new DigitalInput(0);
 	Counter counter = new Counter(limitSwitch);
-	Talon motor = new Talon(3);
+	Talon leftMotor = new Talon(3);
+	Talon rightMotor = new Talon(4);
 	
 	
     public void initDefaultCommand() {
@@ -31,14 +34,16 @@ public class ToteSubsystem extends Subsystem {
     }
     
     // Method Load this will execute the motor to drive 
-    public void load() {
+    public void load(XboxController xbox) {
     	if(isSwitchPressed() == false) { 
-    		motor.set(0.5);
+    		leftMotor.set(xbox.getRightStickYAxis());
+    		rightMotor.set(-xbox.getRightStickYAxis());
     	}
     }
     
-    public void unload() {
-    	motor.set(-0.5);
+    public void unload(XboxController xbox) {
+    	leftMotor.set(-xbox.getRightStickYAxis());
+		rightMotor.set(xbox.getRightStickYAxis());
     }
     
     // Is switch thrown? (counter > 1)    
@@ -55,7 +60,8 @@ public class ToteSubsystem extends Subsystem {
     
     // Stop loading
     public void stop() {
-    	motor.set(0.0);
+    	leftMotor.set(0.0);
+		rightMotor.set(0.0);
     }
     
 }
