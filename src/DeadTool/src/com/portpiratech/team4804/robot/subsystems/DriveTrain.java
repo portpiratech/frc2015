@@ -20,8 +20,8 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		super();
-		left_motor = new Talon(0);
-		right_motor = new Talon(1);
+		left_motor = new Talon(1);
+		right_motor = new Talon(0);
 		
 		drive = new RobotDrive(left_motor, right_motor);
 	}

@@ -1,10 +1,10 @@
 
 package com.portpiratech.team4804.robot;
 
+import com.portpiratech.team4804.robot.commands.BridgeDown;
+import com.portpiratech.team4804.robot.commands.BridgeUp;
 import com.portpiratech.team4804.robot.commands.ExtendPiston;
-import com.portpiratech.team4804.robot.commands.LoadTote;
 import com.portpiratech.team4804.robot.commands.RetractPiston;
-import com.portpiratech.team4804.robot.commands.UnloadTote;
 import com.portpiratech.xbox360.XboxController;
 
 /**
@@ -21,8 +21,8 @@ public class OI {
         // Connect the buttons to commands
     	operatorController.getAButton().whileHeld(new ExtendPiston());
     	operatorController.getBButton().whileHeld(new RetractPiston());
-    	operatorController.getXButton().whenPressed(new LoadTote());
-        operatorController.getYButton().whileHeld(new UnloadTote());
+    	operatorController.getXButton().whenPressed(new BridgeUp());
+    	operatorController.getYButton().whenPressed(new BridgeDown());    
     }
     
     /**

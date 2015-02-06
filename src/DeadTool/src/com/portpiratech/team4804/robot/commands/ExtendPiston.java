@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package com.portpiratech.team4804.robot.commands;
-
 import com.portpiratech.team4804.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;

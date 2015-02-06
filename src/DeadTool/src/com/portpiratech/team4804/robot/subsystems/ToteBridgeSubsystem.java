@@ -1,31 +1,34 @@
 package com.portpiratech.team4804.robot.subsystems;
 
+import com.portpiratech.team4804.robot.commands.ToteBridge;
 import com.portpiratech.xbox360.XboxController;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ToteSubsystem extends Subsystem {
+public class ToteBridgeSubsystem extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
 	// We will need a DigistalInput, Counter, Motor(Talon)
 	
-	DigitalInput limitSwitch = new DigitalInput(0);
+	DigitalInput limitSwitch = new DigitalInput(2);
 	Counter counter = new Counter(limitSwitch);
-	Talon leftMotor = new Talon(3);
-	Talon rightMotor = new Talon(4);
+	Talon leftMotor = new Talon(2);
+	Talon rightMotor = new Talon(3);
+	double multiplier = 0.5;
 	
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new ToteBridge());
     }
     
     // Initialize Counter
@@ -34,18 +37,33 @@ public class ToteSubsystem extends Subsystem {
     }
     
     // Method Load this will execute the motor to drive 
-    public void load(XboxController xbox) {
-    	if(isSwitchPressed() == false) { 
-    		leftMotor.set(xbox.getRightStickYAxis());
-    		rightMotor.set(-xbox.getRightStickYAxis());
+    //public void load(XboxController xbox) {	
+    //	if(isSwitchPressed() == false) { 
+	//  		leftMotor.set(-xbox.getRightStickYAxis()*speed);
+	//  		rightMotor.set(-xbox.getRightStickYAxis()*speed);    		
+    //	}
+	   
+    //}
+    
+    //public void unload(XboxController xbox) {
+    //	leftMotor.set(xbox.getRightStickYAxis()*speed);
+	//	rightMotor.set(xbox.getRightStickYAxis()*speed);
+    //}
+    
+    public void bridge(XboxController xbox) {
+    	bridge(xbox.getRightStickYAxis());
+    }
+    
+    public void bridge(double speed) {
+    	SmartDashboard.putNumber("speed",multiplier*speed);
+    	if(Math.abs(multiplier*speed) > .1) {
+    		leftMotor.set(multiplier*speed);
+    		rightMotor.set(multiplier*speed);	
+    	}else{
+    		leftMotor.set(0.0);
+    		rightMotor.set(0.0);
     	}
     }
-    
-    public void unload(XboxController xbox) {
-    	leftMotor.set(-xbox.getRightStickYAxis());
-		rightMotor.set(xbox.getRightStickYAxis());
-    }
-    
     // Is switch thrown? (counter > 1)    
     public boolean getSwitchStatus() {
     	if(isSwitchPressed()) {

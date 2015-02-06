@@ -39,10 +39,9 @@ public class PistonTestSubsystem extends Subsystem {
 		
 	}
 	
-	public void stop(){
+	public void stop() {
 		solenoid.set(Value.kOff);
 	}
-
 	/**
 	 * Reset the robots sensors to the zero states.
 	 */

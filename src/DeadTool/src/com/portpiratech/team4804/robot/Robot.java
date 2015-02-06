@@ -9,8 +9,10 @@ package com.portpiratech.team4804.robot;
 
 import com.portpiratech.team4804.robot.commands.Autonomous;
 import com.portpiratech.team4804.robot.subsystems.DriveTrain;
-import com.portpiratech.team4804.robot.subsystems.ToteSubsystem;
+import com.portpiratech.team4804.robot.subsystems.EncoderSubsystem;
 import com.portpiratech.team4804.robot.subsystems.PistonTestSubsystem;
+import com.portpiratech.team4804.robot.subsystems.ToteBridgeSubsystem;
+import com.portpiratech.team4804.robot.subsystems.ToteConveyorSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -30,8 +32,11 @@ public class Robot extends IterativeRobot {
     
     public static PistonTestSubsystem pistonTestSubsystem;
     public static DriveTrain drivetrain;
+    public static ToteBridgeSubsystem toteBridgeSubsystem;
+    public static ToteConveyorSubsystem toteConveyorSubsystem;
+    public static EncoderSubsystem encoderSubsystem;
     public static OI oi;
-    public static ToteSubsystem toteSubsystem;
+    
     
 
     /**
@@ -42,7 +47,9 @@ public class Robot extends IterativeRobot {
         // Initialize all subsystems
         drivetrain = new DriveTrain();
         pistonTestSubsystem = new PistonTestSubsystem();
-        toteSubsystem = new ToteSubsystem();
+        toteBridgeSubsystem = new ToteBridgeSubsystem();
+        toteConveyorSubsystem = new ToteConveyorSubsystem();
+        encoderSubsystem = new EncoderSubsystem();
         oi = new OI();
 
         
@@ -51,6 +58,7 @@ public class Robot extends IterativeRobot {
 
         // Show what command your subsystem is running on the SmartDashboard
         SmartDashboard.putData(drivetrain);
+    
        
     }
 
