@@ -2,6 +2,7 @@
 package com.portpiratech.team4804.robot;
 
 import com.portpiratech.team4804.robot.commands.BridgeDown;
+import com.portpiratech.team4804.robot.commands.BridgeReset;
 import com.portpiratech.team4804.robot.commands.BridgeUp;
 import com.portpiratech.team4804.robot.commands.ExtendPiston;
 import com.portpiratech.team4804.robot.commands.RetractPiston;
@@ -22,7 +23,9 @@ public class OI {
     	operatorController.getAButton().whileHeld(new ExtendPiston());
     	operatorController.getBButton().whileHeld(new RetractPiston());
     	operatorController.getXButton().whenPressed(new BridgeUp());
-    	operatorController.getYButton().whenPressed(new BridgeDown());    
+    	operatorController.getYButton().whenPressed(new BridgeDown());
+    	operatorController.getRightBumper().whenPressed(new BridgeReset());
+    	// driverController.getXButton().whenPressed(new ReadEncoder());
     }
     
     /**

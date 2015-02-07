@@ -61,6 +61,10 @@ public class XboxController extends Joystick{
 		return new JoystickButton(this, 3);
 	}
 	
+	public JoystickButton getRightBumper(){
+		return new JoystickButton(this, 6);
+	}
+	
 	/**
 <<<<<<< HEAD
 	 * This method returns the Y Button from the XBox Controller

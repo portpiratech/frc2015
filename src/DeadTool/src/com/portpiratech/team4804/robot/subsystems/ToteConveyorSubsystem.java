@@ -3,6 +3,7 @@ package com.portpiratech.team4804.robot.subsystems;
 import com.portpiratech.team4804.robot.commands.ToteConveyor;
 import com.portpiratech.xbox360.XboxController;
 
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -16,7 +17,7 @@ public class ToteConveyorSubsystem extends Subsystem {
 	
 	// We will need a DigistalInput, Counter, Motor(Talon)
 	
-	VictorSP conveyorMotor = new VictorSP(5);
+	Talon conveyorMotor = new Talon(3);
 	
 	
     public void initDefaultCommand() {

@@ -6,6 +6,7 @@ import com.portpiratech.xbox360.XboxController;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,10 +20,11 @@ public class ToteBridgeSubsystem extends Subsystem {
 	
 	// We will need a DigistalInput, Counter, Motor(Talon)
 	
-	DigitalInput limitSwitch = new DigitalInput(2);
+	DigitalInput limitSwitch = new DigitalInput(4);
 	Counter counter = new Counter(limitSwitch);
+	VictorSP motorController = new VictorSP(4);
 	Talon leftMotor = new Talon(2);
-	Talon rightMotor = new Talon(3);
+	Talon rightMotor = new Talon(7);
 	double multiplier = 0.5;
 	
 	
@@ -57,11 +59,13 @@ public class ToteBridgeSubsystem extends Subsystem {
     public void bridge(double speed) {
     	SmartDashboard.putNumber("speed",multiplier*speed);
     	if(Math.abs(multiplier*speed) > .1) {
-    		leftMotor.set(multiplier*speed);
-    		rightMotor.set(multiplier*speed);	
+    		//leftMotor.set(multiplier*speed);
+    		//rightMotor.set(multiplier*speed);
+    		motorController.set(multiplier*speed);
     	}else{
-    		leftMotor.set(0.0);
-    		rightMotor.set(0.0);
+    		motorController.set(0.0);
+    		//leftMotor.set(0.0);
+    		//rightMotor.set(0.0);
     	}
     }
     // Is switch thrown? (counter > 1)    
