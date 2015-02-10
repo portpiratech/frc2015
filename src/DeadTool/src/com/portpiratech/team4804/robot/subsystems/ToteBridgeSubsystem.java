@@ -22,7 +22,7 @@ public class ToteBridgeSubsystem extends Subsystem {
 	
 	DigitalInput limitSwitch = new DigitalInput(4);
 	Counter counter = new Counter(limitSwitch);
-	VictorSP motorController = new VictorSP(4);
+	VictorSP motorController = new VictorSP(8);
 	Talon leftMotor = new Talon(2);
 	Talon rightMotor = new Talon(7);
 	double multiplier = 0.5;

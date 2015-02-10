@@ -29,23 +29,23 @@ public class EncoderSubsystem extends Subsystem {
 	private int position = 0;
 	private final int maxPosition = 4;
 	private final int minPosition = 0;
-	private double speed = 1;
+	private double speed = 0.3;
 	private double pos = 0;
-	private double correctionSpeed = 0.1;
+	private double correctionSpeed = 0.5;
 	// 497 pulses maximum
 	// 0.724 degree per pulse
 	// 1.38 pulses per degree
-	private final double pos1 = 0;
-	private final double pos2 = 24.85;
-	private final double pos3 = 49.7;
-	private final double pos4 = 74.55;
-	private final double pos5 = 99.4;
+	private final double home = 0;
+	private final double pos1 = 24.85;
+	private final double pos2 = 49.7;
+	private final double pos3 = 74.55;
+	private final double pos4 = 99.4;
 	//private final boolean SWITCHPRESSED = true;
 	private boolean isResetting = false;
 	
 	public EncoderSubsystem() {
 		super();
-		motorController = new VictorSP(5);
+		motorController = new VictorSP(4);
 		encoder = new Encoder(aChannel, bChannel, true);
 		limitSwitch = new DigitalInput(2);
 		counter = new Counter(limitSwitch);
@@ -79,7 +79,7 @@ public class EncoderSubsystem extends Subsystem {
     	SmartDashboard.putString("Encoder Subsystem", "reset method called");
     	SmartDashboard.putBoolean("Encoder Subsystem Switch", isSwitchPressed());
     	if (isSwitchPressed() == false) {
-	    	motorController.set(0.5);
+	    	motorController.set(-0.5);
     	}
     }
     
@@ -107,17 +107,18 @@ public class EncoderSubsystem extends Subsystem {
     }
     
     public void positionUp() {
+    	//moves toward home pos from floor
     	if(!isResetting && position < maxPosition) {
     		SmartDashboard.putString("Encoder Command", "Position Up Set Mode");
     		position++;
-    		motorController.set(speed);
-    		while(encoder.get() <= getTargetPosition()) {
+    		motorController.set(-speed);
+    		while(encoder.get() >= getTargetPosition()) {
     		}
     		SmartDashboard.putNumber("Encoder Pos before correction", encoder.get());
     		SmartDashboard.putString("Encoder Command", "Position Up Correction Mode");
     		// high speed overshoots target position, so move it back at a slow speed
-    		motorController.set(-correctionSpeed);
-    		while(encoder.get() >= getTargetPosition()) {
+    		motorController.set(correctionSpeed);
+    		while(encoder.get() <= getTargetPosition()) {
     		}
     		motorController.set(0.0);
     	}
@@ -125,17 +126,18 @@ public class EncoderSubsystem extends Subsystem {
     }
     
     public void positionDown() {
+    	//moves away from home pos toward floor
     	if(!isResetting && position > minPosition) {
     		SmartDashboard.putString("Encoder Command", "Position Down Set Mode");
     		position--;
-    		motorController.set(-speed);
-    		while(encoder.get() >= getTargetPosition()) {
+    		motorController.set(speed);
+    		while(encoder.get() <= getTargetPosition()) {
     		}
     		SmartDashboard.putNumber("Encoder Pos before correction", encoder.get());
     		SmartDashboard.putString("Encoder Command", "Position Down Correction Mode");
     		// high speed overshoots target position, so move it back at a slow speed
-    		motorController.set(correctionSpeed);
-    		while(encoder.get() <= getTargetPosition()) {
+    		motorController.set(-correctionSpeed);
+    		while(encoder.get() >= getTargetPosition()) {
     		}
     		motorController.set(0.0);    	
     	}
@@ -163,23 +165,23 @@ public class EncoderSubsystem extends Subsystem {
     	switch(position) {
     	
     	case 0: 
-    		pos = pos1;
+    		pos = home;
     		break;
     		
     	case 1: 
-    		pos = pos2;
+    		pos = pos1;
     		break;
     		
     	case 2: 
-    		pos = pos3;
+    		pos = pos2;
     		break;
     		
     	case 3: 
-    		pos = pos4;
+    		pos = pos3;
     		break; 
     		
     	case 4: 
-    		pos = pos5;
+    		pos = pos4;
     		break;
     	}	
     	return pos;
