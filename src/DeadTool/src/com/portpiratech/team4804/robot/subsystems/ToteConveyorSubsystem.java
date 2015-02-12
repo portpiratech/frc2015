@@ -4,8 +4,8 @@ import com.portpiratech.team4804.robot.commands.ToteConveyor;
 import com.portpiratech.xbox360.XboxController;
 
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -32,6 +32,8 @@ public class ToteConveyorSubsystem extends Subsystem {
     
     public void conveyor(double speed) {
     	if(Math.abs(speed) > .1) {
+        	SmartDashboard.putNumber("Bridge Speed Reference", speed);
+
     		conveyorMotor.set(speed);
     	} else {
     		conveyorMotor.set(0.0);
