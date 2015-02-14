@@ -2,6 +2,7 @@
 package com.portpiratech.team4804.robot;
 
 import com.portpiratech.team4804.robot.commands.BridgeDown;
+import com.portpiratech.team4804.robot.commands.BridgeDrop;
 import com.portpiratech.team4804.robot.commands.BridgeReset;
 import com.portpiratech.team4804.robot.commands.BridgeUp;
 import com.portpiratech.team4804.robot.commands.ExtendPiston;
@@ -17,7 +18,16 @@ public class OI {
 	private static final int DRIVER_CONTROLLER_PORT = 0;
 	private XboxController driverController = new XboxController(DRIVER_CONTROLLER_PORT);
     private XboxController operatorController = new XboxController(OPERATOR_CONTROLLER_PORT);
-
+    public static final int DRIVEMOTOR1_PORT = 0; //Talon
+    public static final int DRIVEMOTOR2_PORT = 1; //Talon
+    public static final int BRIDGEMOTOR1_PORT = 2; //Talon
+    public static final int BRIDGEMOTOR2_PORT = 3; //Talon
+    public static final int CONVEYORMOTOR_PORT = 4; //VictorSP
+    public static final int LIMITSWITCH1_PORT = 2; //DigitalInput
+    public static final int LIMITSWITCH2_PORT = 3; //DigitalInput
+    public static final int SOLENOID1_PORT1 = 0; //DoubleSolenoid
+    public static final int SOLENOID1_PORT2 = 1; //DoubleSolenoid
+    
     public OI() {
         // Connect the buttons to commands
     	operatorController.getAButton().whileHeld(new ExtendPiston());
@@ -25,6 +35,7 @@ public class OI {
     	operatorController.getXButton().whenPressed(new BridgeUp());
     	operatorController.getYButton().whenPressed(new BridgeDown());
     	operatorController.getRightBumper().whenPressed(new BridgeReset());
+    	operatorController.getLeftBumper().whenPressed(new BridgeDrop());
     	// driverController.getXButton().whenPressed(new ReadEncoder());
     }
     

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * @author PortPiratech
  *
  */
-public class XboxController extends Joystick{
+public class XboxController extends Joystick {
 
 	/**
 	 * Constructor which takes the XBox Controller port and calls super class.
@@ -25,7 +25,7 @@ public class XboxController extends Joystick{
 	 * 
 	 * @return a double value representing the position of the Left Stick on the XBox Controller.
 	 */
-	public double getLeftStickYAxis(){
+	public double getLeftStickYAxis() {
 		return getY();
 	}
 	
@@ -33,7 +33,7 @@ public class XboxController extends Joystick{
 	 * 
 	 * @return a double value representing the position of the Right Stick on the XBox Controller.
 	 */
-	public double getRightStickYAxis(){
+	public double getRightStickYAxis() {
 		return getRawAxis(5);
 	}
 	
@@ -41,7 +41,7 @@ public class XboxController extends Joystick{
 	 * This method returns the A Button from the XBox Controller
 	 * @return
 	 */
-	public JoystickButton getAButton(){
+	public JoystickButton getAButton() {
 		return new JoystickButton(this,1);
 	}
 	
@@ -49,7 +49,7 @@ public class XboxController extends Joystick{
 	 * This method returns the B Button from the XBox Controller
 	 * @return JoystickButton Mapped to Button B on Xbox Controller
 	 */
-	public JoystickButton getBButton(){
+	public JoystickButton getBButton() {
 		return new JoystickButton(this, 2);
 	}
 	
@@ -57,23 +57,19 @@ public class XboxController extends Joystick{
 	 * This method returns the X Button from the XBox Controller
 	 * @return JoystickButton Mapped to Button X on Xbox Controller
 	 */
-	public JoystickButton getXButton(){
+	public JoystickButton getXButton() {
 		return new JoystickButton(this, 3);
 	}
 	
-	public JoystickButton getRightBumper(){
-		return new JoystickButton(this, 6);
+	public JoystickButton getYButton() {
+		return new JoystickButton(this, 4);
 	}
 	
-	/**
-<<<<<<< HEAD
-	 * This method returns the Y Button from the XBox Controller
-=======
-	 * This method returns the X Button from the XBox Controller
->>>>>>> 3e8eef7da34d34c50830ccae585ba7e655b4340d
-	 * @return JoystickButton Mapped to Button X on Xbox Controller
-	 */
-	public JoystickButton getYButton(){
-		return new JoystickButton(this, 4);
+	public JoystickButton getLeftBumper() {
+		return new JoystickButton(this, 5);
+	}
+	
+	public JoystickButton getRightBumper() {
+		return new JoystickButton(this, 6);
 	}
 }

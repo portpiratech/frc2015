@@ -1,5 +1,6 @@
 package com.portpiratech.team4804.robot.subsystems;
 
+import com.portpiratech.team4804.robot.OI;
 import com.portpiratech.team4804.robot.commands.TankDriveWithJoystick;
 import com.portpiratech.xbox360.XboxController;
 
@@ -20,8 +21,8 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		super();
-		left_motor = new Talon(1);
-		right_motor = new Talon(0);
+		left_motor = new Talon(OI.DRIVEMOTOR2_PORT);
+		right_motor = new Talon(OI.DRIVEMOTOR1_PORT);
 		
 		drive = new RobotDrive(left_motor, right_motor);
 	}

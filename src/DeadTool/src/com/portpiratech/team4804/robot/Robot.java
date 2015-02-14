@@ -9,9 +9,8 @@ package com.portpiratech.team4804.robot;
 
 import com.portpiratech.team4804.robot.commands.Autonomous;
 import com.portpiratech.team4804.robot.subsystems.DriveTrain;
-import com.portpiratech.team4804.robot.subsystems.EncoderSubsystem;
 import com.portpiratech.team4804.robot.subsystems.PistonTestSubsystem;
-import com.portpiratech.team4804.robot.subsystems.ToteBridgeSubsystem;
+import com.portpiratech.team4804.robot.subsystems.ToteBridgePosSubsystem;
 import com.portpiratech.team4804.robot.subsystems.ToteConveyorSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -32,9 +31,8 @@ public class Robot extends IterativeRobot {
     
     public static PistonTestSubsystem pistonTestSubsystem;
     public static DriveTrain drivetrain;
-    public static ToteBridgeSubsystem toteBridgeSubsystem;
     public static ToteConveyorSubsystem toteConveyorSubsystem;
-    public static EncoderSubsystem encoderSubsystem;
+    public static ToteBridgePosSubsystem toteBridgePosSubsystem;
     public static OI oi;
     
     
@@ -47,9 +45,8 @@ public class Robot extends IterativeRobot {
         // Initialize all subsystems
         drivetrain = new DriveTrain();
         pistonTestSubsystem = new PistonTestSubsystem();
-        toteBridgeSubsystem = new ToteBridgeSubsystem();
+        toteBridgePosSubsystem = new ToteBridgePosSubsystem();
         toteConveyorSubsystem = new ToteConveyorSubsystem();
-        encoderSubsystem = new EncoderSubsystem();
         oi = new OI();
 
         

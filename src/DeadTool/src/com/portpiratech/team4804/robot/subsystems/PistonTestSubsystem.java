@@ -1,5 +1,7 @@
 package com.portpiratech.team4804.robot.subsystems;
 
+import com.portpiratech.team4804.robot.OI;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -16,7 +18,7 @@ public class PistonTestSubsystem extends Subsystem {
 
 	public PistonTestSubsystem() {
 		super();
-		solenoid = new DoubleSolenoid(0,1);
+		solenoid = new DoubleSolenoid(OI.SOLENOID1_PORT1,OI.SOLENOID1_PORT2);
 	}
 
 

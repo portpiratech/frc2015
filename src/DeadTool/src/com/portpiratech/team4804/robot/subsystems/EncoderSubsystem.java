@@ -131,7 +131,6 @@ public class EncoderSubsystem extends Subsystem {
     		//}
     		//motorController.set(-0.2);
     		goToTargetPosition();
-    		
     	}
 		SmartDashboard.putString("Encoder Command", "idle");
     }
@@ -176,33 +175,36 @@ public class EncoderSubsystem extends Subsystem {
     	double currentSpeed = 1;
     	double finalSpeed = 0;
     	double posError = 10;
-    	while(isSwitchPressed() == false) {
-    		// for debugging purposes, error bounds are zero so loop runs constantly
+    	SmartDashboard.putString("Encoder Command", "Lock Speed Mode");
+
+    	currentSpeed = motorController.getSpeed();
+    	posError = getTargetPosition() - encoder.getRaw();
+    	if(isSwitchPressed() == false) {
+        // if (posError != 0.0) {
+    		//runs until limit switch is pressed
 	    	currentSpeed = motorController.getSpeed();
-	    	//finalSpeed = currentSpeed;
-	    	//double posError = getTargetPosition() - encoder.getRaw();
 	    	posError = getTargetPosition() - encoder.getRaw();
 	    	SmartDashboard.putNumber("Position Error", posError);
 	    		    	
 	    	if(posError >= posTolerance) {
-	    		// increase speed toward floor if current position is lower than target
-	    		SmartDashboard.putString("Encoder Command", "Lock Speed Mode - Incrementing");
+	    		// increase speed toward floor if current position is lower than target (too close to the robot)
+	    		SmartDashboard.putString("Lock Speed Command", "Incrementing Speed");
 	    		finalSpeed = (currentSpeed + incGain*Math.abs(posError));	    		
 	    	}
   
 	    	if(posError <= -posTolerance) {
-	    		// increase speed toward robot if current position is greater than target
-	    		SmartDashboard.putString("Encoder Command", "Lock Speed Mode - Decrementing");
+	    		// increase speed toward robot if current position is greater than target (too close to the floor)
+	    		SmartDashboard.putString("Lock Speed Command", "Decrementing Speed");
 	    		finalSpeed = (currentSpeed - incGain*Math.abs(posError));
 	    	}
 	    	
-	    	if(posError < posTolerance && posError > -posTolerance) {
+	    	if(Math.abs(posError) < posTolerance) {
 	    		// do nothing if the current position is within reasonable bounds
-	    		SmartDashboard.putString("Encoder Command", "Lock Speed Mode - Doing Nothing");
+	    		SmartDashboard.putString("Lock Speed Command", "Doing Nothing");
 	    		finalSpeed = currentSpeed;
 	    	}
 	    	
-	    	SmartDashboard.putString("Encoder Command", "Lock Speed Mode - Setting Speed");
+	    	SmartDashboard.putString("Lock Speed Command", "Setting Speed");
 	    	if(Math.abs(finalSpeed) > maxSpeed) {
 	    		int sign = (int) (Math.abs(finalSpeed)/finalSpeed);
 	    		motorController.set(sign*maxSpeed);
@@ -214,8 +216,9 @@ public class EncoderSubsystem extends Subsystem {
 	    	SmartDashboard.putNumber("Final Speed", finalSpeed);
 	    	SmartDashboard.putNumber("Encoder Position Actual", readEncoder());
 	    	SmartDashboard.putNumber("Encoder Position Target", getTargetPosition());
-	    	SmartDashboard.putString("Encoder Command", "Lock Speed Mode");
+	    	SmartDashboard.putString("Lock Speed Command", "Looping");
     	}
+    	SmartDashboard.putString("Lock Speed Command", "idle");
     	return;
     }
     

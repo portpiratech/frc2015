@@ -12,7 +12,7 @@ public class ReadEncoder extends Command {
 
     public ReadEncoder() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.encoderSubsystem);
+        requires(Robot.toteBridgePosSubsystem);
     }
 
     // Called just before this Command runs the first time
@@ -21,8 +21,8 @@ public class ReadEncoder extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putNumber("Encoder Position Actual", Robot.encoderSubsystem.readEncoder());
-    	SmartDashboard.putNumber("Encoder Position Target", Robot.encoderSubsystem.getTargetPosition());
+    	SmartDashboard.putNumber("Encoder Position Actual", Robot.toteBridgePosSubsystem.readEncoder());
+    	SmartDashboard.putNumber("Encoder Position Target", Robot.toteBridgePosSubsystem.getTargetPosition());
     }
 
     // Make this return true when this Command no longer needs to run execute()
