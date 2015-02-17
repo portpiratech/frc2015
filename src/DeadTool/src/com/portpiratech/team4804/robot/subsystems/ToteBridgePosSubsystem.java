@@ -33,19 +33,19 @@ public class ToteBridgePosSubsystem extends Subsystem {
 	//private double upSpeed = -0.5;
 	private double pos = 0;
 	private final double posTolerance = 1;
-	private final double maxSpeed = 0.5;
+	private final double maxSpeed = .65;
 	//private double lockSpeed = 0;
 	private double incGain = 0.002;
 	// 497 pulses maximum
 	// 0.724 degree per 1 pulse
 	// 1.38 pulses per 1 degree
-	private final double home = 0;
+	private final double home = 50;
 	//private final double pos1 = 24.85;
 	//private final double pos2 = 49.7;
-	private final double pos1 = 100*4; //test value only
-	private final double pos2 = 65.00*4; //test value only
-	private final double pos3 = 74.55*4;
-	private final double pos4 = 99.4*4;
+	private final double pos1 = 40*4; //test value only
+	private final double pos2 = 70*4; //test value only
+	private final double pos3 = 100*4;
+	private final double pos4 = 130*4;
 	
 	public ToteBridgePosSubsystem() {
 		super();
@@ -69,7 +69,7 @@ public class ToteBridgePosSubsystem extends Subsystem {
     	SmartDashboard.putString("Encoder Subsystem", "reset method called");
     	SmartDashboard.putBoolean("Encoder Subsystem Switch", getSwitchStatus());
     	if (getSwitchStatus() == false) {
-	    	setMotorSpeed(-0.5);
+	    	setMotorSpeed(-0.4);
     	}
     }
     
@@ -140,13 +140,16 @@ public class ToteBridgePosSubsystem extends Subsystem {
 	    	if(posError >= posTolerance) {
 	    		// increase speed toward floor if current position is lower than target (too close to the robot)
 	    		SmartDashboard.putString("Lock Speed Command", "Incrementing Speed");
-	    		finalSpeed = (currentSpeed + incGain*Math.abs(posError));	    		
+	    		finalSpeed = (currentSpeed + incGain*Math.abs(posError));
+	    		finalSpeed = (finalSpeed * Math.abs(posError/65));
 	    	}
   
 	    	if(posError <= -posTolerance) {
 	    		// increase speed toward robot if current position is greater than target (too close to the floor)
 	    		SmartDashboard.putString("Lock Speed Command", "Decrementing Speed");
 	    		finalSpeed = (currentSpeed - incGain*Math.abs(posError));
+	    		finalSpeed = (finalSpeed * Math.abs(posError/100));
+
 	    	}
 	    	
 	    	if(Math.abs(posError) < posTolerance) {
@@ -162,6 +165,7 @@ public class ToteBridgePosSubsystem extends Subsystem {
 	    	}else{
 	    		setMotorSpeed(finalSpeed);
 	    	}
+	    	
 	    	//Timer.delay(0.005);
 	    	
 	    	SmartDashboard.putNumber("Final Speed", finalSpeed);

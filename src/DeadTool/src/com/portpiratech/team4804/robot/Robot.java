@@ -54,7 +54,6 @@ public class Robot extends IterativeRobot {
         autonomousCommand = new Autonomous();
 
         // Show what command your subsystem is running on the SmartDashboard
-        SmartDashboard.putData(drivetrain);
     
        
     }

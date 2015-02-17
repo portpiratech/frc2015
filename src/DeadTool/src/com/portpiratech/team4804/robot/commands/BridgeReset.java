@@ -3,6 +3,7 @@ package com.portpiratech.team4804.robot.commands;
 import com.portpiratech.team4804.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class BridgeReset extends Command {
 	
@@ -17,6 +18,7 @@ public class BridgeReset extends Command {
     protected void initialize() {
     	Robot.toteBridgePosSubsystem.initializeCounter();
     	Robot.toteBridgePosSubsystem.startReset();
+    	SmartDashboard.putString("Encoder Command", "Reseting");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,6 +33,8 @@ public class BridgeReset extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.toteBridgePosSubsystem.finishReset();
+    	SmartDashboard.putString("Encoder Command", "Finished");
+
     }
 
     // Called when another command which requires one or more of the same
