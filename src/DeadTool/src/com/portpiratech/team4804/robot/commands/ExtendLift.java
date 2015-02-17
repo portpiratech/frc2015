@@ -6,24 +6,21 @@ package com.portpiratech.team4804.robot.commands;
 import com.portpiratech.team4804.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public class ExtendPiston extends Command {
+public class ExtendLift extends Command {
     
-    public ExtendPiston() {
-        requires(Robot.pistonTestSubsystem);
+    public ExtendLift() {
+        requires(Robot.pistonSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	SmartDashboard.putString("ExtendPiston", "Initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putString("ExtendPiston", "Execute");
-        Robot.pistonTestSubsystem.extend();
+        Robot.pistonSubsystem.extendLift();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,8 +30,7 @@ public class ExtendPiston extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	SmartDashboard.putString("ExtendPiston", "End");
-        Robot.pistonTestSubsystem.stop();
+        Robot.pistonSubsystem.stopLift();
     }
 
     // Called when another command which requires one or more of the same

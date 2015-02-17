@@ -1,31 +1,29 @@
 package com.portpiratech.team4804.robot.subsystems;
 
-import com.portpiratech.team4804.robot.commands.ReadEncoder;
-import com.portpiratech.xbox360.XboxController;
+import com.portpiratech.team4804.robot.OI;
+import com.portpiratech.team4804.robot.commands.BridgeLock;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
 /**
- *	THIS WILL EVENTUALLY BECOME THE BRIDGE SUBSYSTEM.
- *  THIS WILL HAPPEN WHEN THE ENCODERS ARE HOOKED UP TO THE ROBOT.
- *  WHEN THAT HAPPENDS DELETE THE PRE-EXISTING BRIDGESUBSYSTEM AND
- *  RENAME THIS ONE AND DELETE THIS TEXT.
- *
+ * This subsystem constantly checks/regulates the position of the tote bridge.
+ * It allows the bridge to lock into particular positions we need in order to operate.
  */
-
-public class EncoderSubsystem extends Subsystem {
-	
-	DigitalInput limitSwitch;
-	Counter counter;
+public class ToteBridgePosSubsystem extends Subsystem {
+    
+	DigitalInput primaryLimitSwitch;
+	DigitalInput secondaryLimitSwitch;
+	Counter primaryCounter;
+	Counter secondaryCounter;
 	Encoder encoder;
-	VictorSP motorController;
+	Talon primaryMotorController;
+	Talon secondaryMotorController;
 	private final DigitalInput aChannel = new DigitalInput(0);
 	private final DigitalInput bChannel = new DigitalInput(1);
 	private int position = 0;
@@ -34,6 +32,8 @@ public class EncoderSubsystem extends Subsystem {
 	//private double downSpeed = 0.3;
 	//private double upSpeed = -0.5;
 	private double pos = 0;
+	private final double posTolerance = 1;
+	private final double maxSpeed = 0.5;
 	//private double lockSpeed = 0;
 	private double incGain = 0.002;
 	// 497 pulses maximum
@@ -46,64 +46,43 @@ public class EncoderSubsystem extends Subsystem {
 	private final double pos2 = 65.00*4; //test value only
 	private final double pos3 = 74.55*4;
 	private final double pos4 = 99.4*4;
-	private final double posTolerance = 1;
-	private final double maxSpeed = 0.5;
-	//private final boolean SWITCHPRESSED = true;
-	private boolean isResetting = false;
 	
-	public EncoderSubsystem() {
+	public ToteBridgePosSubsystem() {
 		super();
-		motorController = new VictorSP(4);
+		primaryMotorController = new Talon(OI.BRIDGEMOTOR1_PORT);
+		secondaryMotorController = new Talon(OI.BRIDGEMOTOR2_PORT);
+		primaryLimitSwitch = new DigitalInput(OI.LIMITSWITCH1_PORT);
+		secondaryLimitSwitch = new DigitalInput(OI.LIMITSWITCH2_PORT);
+		primaryCounter = new Counter(primaryLimitSwitch);
+		secondaryCounter = new Counter(secondaryLimitSwitch);
 		encoder = new Encoder(aChannel, bChannel, true, EncodingType.k4X);
-		limitSwitch = new DigitalInput(2);
-		counter = new Counter(limitSwitch);
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-       setDefaultCommand(new ReadEncoder());
-       SmartDashboard.putString("Encoder Command", "idle");
-    }
-    
-    public void test(XboxController xbox) {
-    	test(xbox.getLeftStickYAxis());
-    }
-    
-    public void test(double speed) {
-    	if(Math.abs(speed) > .1) {
-    		motorController.set(speed);
-    	}else{
-    		motorController.set(0.0);
-    	}
-    	
+       setDefaultCommand(new BridgeLock());
+       SmartDashboard.putString("Encoder Command", "Locking Position");
     }
     
     public void startReset() {
-    	if (isResetting) {
-    		return;
-    	}
-    	isResetting = true;
     	SmartDashboard.putString("Encoder Subsystem", "reset method called");
-    	SmartDashboard.putBoolean("Encoder Subsystem Switch", isSwitchPressed());
-    	if (isSwitchPressed() == false) {
-	    	motorController.set(-0.5);
+    	SmartDashboard.putBoolean("Encoder Subsystem Switch", getSwitchStatus());
+    	if (getSwitchStatus() == false) {
+	    	setMotorSpeed(-0.5);
     	}
     }
     
     public void finishReset() {
-    	initializePosition();
     	stop();
+    	initializePosition();
     	initializeCounter();
     	SmartDashboard.putNumber("Encoder Position In finishReset", encoder.getRaw());
     	position = 0;
-    	isResetting = false;
     }
     
     public void stop() {
-    	motorController.set(0.0);
-    	initializePosition();
+    	setMotorSpeed(0.0);
     }
     
     public double readEncoder() {
@@ -117,72 +96,44 @@ public class EncoderSubsystem extends Subsystem {
     
     public void positionUp() {
     	//moves toward home pos from floor
-    	if(!isResetting && position < maxPosition) {
-    		SmartDashboard.putString("Encoder Command", "Position Up Set Mode");
+    	if(position < maxPosition) {
     		position++;
-    		//motorController.set(upSpeed);
-    		//while(encoder.getRaw() >= getTargetPosition()) {
-    		//}
-    		SmartDashboard.putNumber("Encoder Pos before correction", encoder.getRaw());
-    		SmartDashboard.putString("Encoder Command", "Position Up Correction Mode");
-    		// high speed overshoots target position, so move it back at a slow speed
-    		//if(encoder.getRaw() < getTargetPosition()) motorController.set(downSpeed);
-    		//while(encoder.getRaw() <= getTargetPosition()) {
-    		//}
-    		//motorController.set(-0.2);
-    		goToTargetPosition();
     	}
-		SmartDashboard.putString("Encoder Command", "idle");
     }
     
     public void positionDown() {
     	//moves away from home pos toward floor
-    	if(!isResetting && position > minPosition) {
-    		SmartDashboard.putString("Encoder Command", "Position Down Set Mode");
+    	if(position > minPosition) {
     		position--;
-    		//motorController.set(downSpeed);
-    		//while(encoder.getRaw() <= getTargetPosition()) {
-    		//}
-    		SmartDashboard.putNumber("Encoder Pos before correction", encoder.getRaw());
-    		SmartDashboard.putString("Encoder Command", "Position Down Correction Mode");
-    		// high speed overshoots target position, so move it back at a slow speed
-    		//if(encoder.getRaw() > getTargetPosition()) motorController.set(upSpeed);
-    		//while(encoder.getRaw() >= getTargetPosition()) {
-    		//}
-    		//motorController.set(-0.2);    	
-    		goToTargetPosition();
-    	}
-		SmartDashboard.putString("Encoder Command", "idle");
+    	}  
     }
     
     public void initializeCounter() {
-    	counter.reset();
+    	primaryCounter.reset();
     }
     
     public boolean getSwitchStatus() {
-    	if(isSwitchPressed()) {
-    		return true;
-    	}
-    	return counter.get() > 0;
+    	return getPrimSwitchStatus() && getSecSwitchStatus();
     }
     
-    public boolean isSwitchPressed() {
-    	return limitSwitch.get();
+    public boolean getPrimSwitchStatus() {
+    	return primaryLimitSwitch.get() || (primaryCounter.get() > 0);
     }
     
+    public boolean getSecSwitchStatus() {
+    	return secondaryLimitSwitch.get() || secondaryCounter.get() > 0;
+    }
     
-    public void goToTargetPosition() {
+    public void moveTowardTargetPosition() {
     	double currentSpeed = 1;
     	double finalSpeed = 0;
     	double posError = 10;
     	SmartDashboard.putString("Encoder Command", "Lock Speed Mode");
 
-    	currentSpeed = motorController.getSpeed();
+    	currentSpeed = getMotorSpeed();
     	posError = getTargetPosition() - encoder.getRaw();
-    	if(isSwitchPressed() == false) {
-        // if (posError != 0.0) {
-    		//runs until limit switch is pressed
-	    	currentSpeed = motorController.getSpeed();
+        if (posError != 0.0) {
+	    	currentSpeed = getMotorSpeed();
 	    	posError = getTargetPosition() - encoder.getRaw();
 	    	SmartDashboard.putNumber("Position Error", posError);
 	    		    	
@@ -207,9 +158,9 @@ public class EncoderSubsystem extends Subsystem {
 	    	SmartDashboard.putString("Lock Speed Command", "Setting Speed");
 	    	if(Math.abs(finalSpeed) > maxSpeed) {
 	    		int sign = (int) (Math.abs(finalSpeed)/finalSpeed);
-	    		motorController.set(sign*maxSpeed);
+	    		setMotorSpeed(sign*maxSpeed);
 	    	}else{
-	    		motorController.set(finalSpeed);
+	    		setMotorSpeed(finalSpeed);
 	    	}
 	    	//Timer.delay(0.005);
 	    	
@@ -221,6 +172,15 @@ public class EncoderSubsystem extends Subsystem {
     	SmartDashboard.putString("Lock Speed Command", "idle");
     	return;
     }
+
+	private void setMotorSpeed(double speed) {
+		primaryMotorController.set(speed);
+		secondaryMotorController.set(-speed);
+	}
+
+	private double getMotorSpeed() {
+		return primaryMotorController.getSpeed();
+	}
     
     public double getTargetPosition() {
     	
@@ -250,7 +210,5 @@ public class EncoderSubsystem extends Subsystem {
     	return pos;
     	
     }
-        
-    
- }
+}
 

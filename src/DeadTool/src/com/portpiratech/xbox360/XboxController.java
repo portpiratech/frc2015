@@ -61,14 +61,26 @@ public class XboxController extends Joystick {
 		return new JoystickButton(this, 3);
 	}
 	
+	/**
+	 * This method returns the Y Button from the XBox Controller
+	 * @return JoystickButton Mapped to Button Y on Xbox Controller
+	 */
 	public JoystickButton getYButton() {
 		return new JoystickButton(this, 4);
 	}
 	
+	/**
+	 * This method returns the left bumper button from the XBox Controller
+	 * @return JoystickButton Mapped to button left bumper on Xbox Controller
+	 */
 	public JoystickButton getLeftBumper() {
 		return new JoystickButton(this, 5);
 	}
 	
+	/**
+	 * This method returns the right bumper button from the XBox Controller
+	 * @return JoystickButton Mapped to button right bumper on Xbox Controller
+	 */
 	public JoystickButton getRightBumper() {
 		return new JoystickButton(this, 6);
 	}

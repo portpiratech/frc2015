@@ -1,12 +1,14 @@
 
 package com.portpiratech.team4804.robot;
 
+import com.portpiratech.team4804.robot.commands.ArmsDown;
+import com.portpiratech.team4804.robot.commands.ArmsUp;
 import com.portpiratech.team4804.robot.commands.BridgeDown;
 import com.portpiratech.team4804.robot.commands.BridgeDrop;
 import com.portpiratech.team4804.robot.commands.BridgeReset;
 import com.portpiratech.team4804.robot.commands.BridgeUp;
-import com.portpiratech.team4804.robot.commands.ExtendPiston;
-import com.portpiratech.team4804.robot.commands.RetractPiston;
+import com.portpiratech.team4804.robot.commands.ExtendLift;
+import com.portpiratech.team4804.robot.commands.RetractLift;
 import com.portpiratech.xbox360.XboxController;
 
 /**
@@ -27,16 +29,19 @@ public class OI {
     public static final int LIMITSWITCH2_PORT = 3; //DigitalInput
     public static final int SOLENOID1_PORT1 = 0; //DoubleSolenoid
     public static final int SOLENOID1_PORT2 = 1; //DoubleSolenoid
+    public static final int SOLENOID2_PORT1 = 2; //DoubleSolenoid
+    public static final int SOLENOID2_PORT2 = 4; //DoubleSolenoid
     
     public OI() {
         // Connect the buttons to commands
-    	operatorController.getAButton().whileHeld(new ExtendPiston());
-    	operatorController.getBButton().whileHeld(new RetractPiston());
+    	operatorController.getAButton().whileHeld(new ExtendLift());
+    	operatorController.getBButton().whileHeld(new RetractLift());
     	operatorController.getXButton().whenPressed(new BridgeUp());
     	operatorController.getYButton().whenPressed(new BridgeDown());
     	operatorController.getRightBumper().whenPressed(new BridgeReset());
     	operatorController.getLeftBumper().whenPressed(new BridgeDrop());
-    	// driverController.getXButton().whenPressed(new ReadEncoder());
+    	driverController.getRightBumper().whenPressed(new ArmsUp());
+    	driverController.getLeftBumper().whenPressed(new ArmsDown());
     }
     
     /**
