@@ -35,7 +35,7 @@ public class ToteBridgePosSubsystem extends Subsystem {
 	private final double posTolerance = 1;
 	private final double maxSpeed = .65;
 	//private double lockSpeed = 0;
-	private double incGain = 0.002;
+	private double incGain = 0.001;
 	// 497 pulses maximum
 	// 0.724 degree per 1 pulse
 	// 1.38 pulses per 1 degree
@@ -141,14 +141,14 @@ public class ToteBridgePosSubsystem extends Subsystem {
 	    		// increase speed toward floor if current position is lower than target (too close to the robot)
 	    		SmartDashboard.putString("Lock Speed Command", "Incrementing Speed");
 	    		finalSpeed = (currentSpeed + incGain*Math.abs(posError));
-	    		finalSpeed = (finalSpeed * Math.abs(posError/65));
+	    		finalSpeed = (finalSpeed * Math.abs(posError/(maxSpeed*100)));
 	    	}
   
 	    	if(posError <= -posTolerance) {
 	    		// increase speed toward robot if current position is greater than target (too close to the floor)
 	    		SmartDashboard.putString("Lock Speed Command", "Decrementing Speed");
 	    		finalSpeed = (currentSpeed - incGain*Math.abs(posError));
-	    		finalSpeed = (finalSpeed * Math.abs(posError/100));
+	    		finalSpeed = (finalSpeed * Math.abs(posError/(maxSpeed*100)));
 
 	    	}
 	    	
