@@ -212,7 +212,6 @@ public class ToteBridgePosSubsystem extends Subsystem {
     		break;
     	}	
     	return pos;
-    	
     }
 }
 
