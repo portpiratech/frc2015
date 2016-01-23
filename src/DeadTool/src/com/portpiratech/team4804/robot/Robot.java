@@ -13,7 +13,9 @@ import com.portpiratech.team4804.robot.subsystems.PistonSubsystem;
 import com.portpiratech.team4804.robot.subsystems.ToteBridgePosSubsystem;
 import com.portpiratech.team4804.robot.subsystems.ToteConveyorSubsystem;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -35,7 +37,31 @@ public class Robot extends IterativeRobot {
     public static ToteBridgePosSubsystem toteBridgePosSubsystem;
     public static OI oi;
     
+
+    CameraServer server;
     
+    public Robot() {
+        server = CameraServer.getInstance();
+        server.setQuality(50);
+        //the camera name (ex "cam0") can be found through the roborio web interface
+        server.startAutomaticCapture("cam0");
+        server = CameraServer.getInstance();
+        server.setQuality(50);
+        //the camera name (ex "cam0") can be found through the roborio web interface
+        server.startAutomaticCapture("cam0");
+    }
+   
+    /**
+     * start up automatic capture you should see the video stream from the
+     * webcam in your FRC PC Dashboard.
+     */
+    public void operatorControl() {
+
+        while (isOperatorControl() && isEnabled()) {
+            /** robot code here! **/
+            Timer.delay(0.005);		// wait for a motor update time
+        }
+    }
 
     /**
      * This function is run when the robot is first started up and should be
