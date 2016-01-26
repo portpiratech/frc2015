@@ -40,8 +40,8 @@ public class OI {
     	operatorController.getYButton().whenPressed(new BridgeDown());
     	operatorController.getRightBumper().whenPressed(new BridgeReset());
     	operatorController.getLeftBumper().whenPressed(new BridgeDrop());
-    	driverController.getRightBumper().whenPressed(new ArmsUp());
-    	driverController.getLeftBumper().whenPressed(new ArmsDown());
+    	//driverController.getRightBumper().whenPressed(new ArmsUp());
+    	//driverController.getLeftBumper().whenPressed(new ArmsDown());
     }
     
     /**

@@ -13,14 +13,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class PistonSubsystem extends Subsystem {
 	
-	private DoubleSolenoid solenoid1;
+	/*private DoubleSolenoid solenoid1;
 	private DoubleSolenoid solenoid2;
 
 	public PistonSubsystem() {
 		super();
 		solenoid1 = new DoubleSolenoid(OI.SOLENOID1_PORT1,OI.SOLENOID1_PORT2);
 		solenoid2 = new DoubleSolenoid(OI.SOLENOID2_PORT1,OI.SOLENOID1_PORT2);
-	}
+	}*/
 
 
 	public void initDefaultCommand() {
@@ -29,8 +29,8 @@ public class PistonSubsystem extends Subsystem {
 
 	/**
 	 * The log method puts interesting information to the SmartDashboard.
-	 */
-	public void log() {
+	 */ 
+	/*public void log() {
 	}
 
 	public void extendLift() {
@@ -55,5 +55,5 @@ public class PistonSubsystem extends Subsystem {
 	
 	public void stopArms() {
 		solenoid2.set(Value.kOff);
-	}
+	}*/
 }
