@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
     public static PistonSubsystem pistonSubsystem;
-    public static DriveTrain drivetrain;
+    public static DriveTrain driveTrain;
     public static ToteConveyorSubsystem toteConveyorSubsystem;
     public static ToteBridgePosSubsystem toteBridgePosSubsystem;
     public static OI oi;
@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
         // Initialize all subsystems
-        drivetrain = new DriveTrain();
+        driveTrain = new DriveTrain();
         pistonSubsystem = new PistonSubsystem();
         toteBridgePosSubsystem = new ToteBridgePosSubsystem();
         toteConveyorSubsystem = new ToteConveyorSubsystem();
@@ -124,6 +124,6 @@ public class Robot extends IterativeRobot {
 	 */
     private void log() {
        
-        drivetrain.log();
+        driveTrain.log();
     }
 }

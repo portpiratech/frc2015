@@ -18,6 +18,8 @@ public class DriveTrain extends Subsystem {
 	private SpeedController left_motor,
 							right_motor;
 	private RobotDrive drive;
+	
+	double speedMult = 0.8; //speed multiplier
 
 	public DriveTrain() {
 		super();
@@ -40,6 +42,20 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void log() {
 	}
+	
+	/**
+	 * Increases speed multiplier
+	 */
+	public void speedUp() {
+		speedMult = 0.8;
+	}
+	
+	/**
+	 * Decreases speed multiplier
+	 */
+	public void speedDown() {
+		speedMult = 0.65;
+	}
 
 	/**
 	 * Tank style driving for the DriveTrain. 
@@ -47,7 +63,7 @@ public class DriveTrain extends Subsystem {
 	 * @param right Speed in range [-1,1]
 	 */
 	public void drive(double left, double right) {
-		drive.tankDrive(-left, -right);
+		drive.tankDrive(-left*speedMult, -right*speedMult);
 	}
 
 	/**
