@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,6 +28,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	
+// #####################################################################################################################
+// ### Set robot mode here ### * Normal mode: operates normally														  ##
+// ########################### * Dummy mode: only uses one controller; only low-speed driving and pistons are enabled.##
+	
+//	public static RobotModes currentMode = RobotModes.DUMMY_MODE;
+	public static RobotModes currentMode = RobotModes.NORMAL_MODE;
+	
+	
+  //Initialization
     Command autonomousCommand;
     
     public static PistonSubsystem pistonSubsystem;
@@ -68,20 +77,31 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        // Initialize all subsystems
-        driveTrain = new DriveTrain();
-        pistonSubsystem = new PistonSubsystem();
-        toteBridgePosSubsystem = new ToteBridgePosSubsystem();
-        toteConveyorSubsystem = new ToteConveyorSubsystem();
-        oi = new OI();
-
-        
-        // instantiate the command used for the autonomous period
-        autonomousCommand = new Autonomous();
-
-        // Show what command your subsystem is running on the SmartDashboard
-    
-       
+        switch(currentMode) {
+        case NORMAL_MODE:
+	    	// Initialize all subsystems
+	        driveTrain = new DriveTrain();
+	        pistonSubsystem = new PistonSubsystem();
+	        toteBridgePosSubsystem = new ToteBridgePosSubsystem();
+	        toteConveyorSubsystem = new ToteConveyorSubsystem();
+	        oi = new OI();
+	        
+	        // instantiate the command used for the autonomous period
+	        autonomousCommand = new Autonomous();
+	
+	        // Show what command your subsystem is running on the SmartDashboard
+	        
+	        break;
+	        
+        case DUMMY_MODE:
+        	driveTrain = new DriveTrain();
+        	pistonSubsystem = new PistonSubsystem();
+        	oi = new OI();
+        	
+        	// instantiate the command used for the autonomous period
+	        autonomousCommand = new Autonomous();
+        	break;
+        }
     }
 
     public void autonomousInit() {

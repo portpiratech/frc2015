@@ -1,6 +1,7 @@
 package com.portpiratech.team4804.robot.subsystems;
 
 import com.portpiratech.team4804.robot.OI;
+import com.portpiratech.team4804.robot.Robot;
 import com.portpiratech.team4804.robot.commands.TankDriveWithJoystick;
 import com.portpiratech.xbox360.XboxController;
 
@@ -19,7 +20,9 @@ public class DriveTrain extends Subsystem {
 							right_motor;
 	private RobotDrive drive;
 	
-	double speedMult = 0.8; //speed multiplier
+	static double speedMult; //speed multiplier
+	static double lowSpeed;
+	static double highSpeed;
 
 	public DriveTrain() {
 		super();
@@ -27,6 +30,20 @@ public class DriveTrain extends Subsystem {
 		right_motor = new Talon(OI.DRIVEMOTOR1_PORT);
 		
 		drive = new RobotDrive(left_motor, right_motor);
+		
+		switch(Robot.currentMode) {
+		case NORMAL_MODE:
+			lowSpeed = 0.65;
+			highSpeed = 0.8;
+			break;
+			
+		case DUMMY_MODE:
+			lowSpeed = 0.55;
+			highSpeed = 0.6;
+			break;
+		}
+		
+		speedMult = highSpeed;
 	}
 
 	/**
@@ -47,14 +64,14 @@ public class DriveTrain extends Subsystem {
 	 * Increases speed multiplier
 	 */
 	public void speedUp() {
-		speedMult = 0.8;
+		speedMult = highSpeed;
 	}
 	
 	/**
 	 * Decreases speed multiplier
 	 */
 	public void speedDown() {
-		speedMult = 0.65;
+		speedMult = lowSpeed;
 	}
 
 	/**
