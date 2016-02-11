@@ -5,6 +5,7 @@ import com.portpiratech.team4804.robot.commands.BridgeDown;
 import com.portpiratech.team4804.robot.commands.BridgeDrop;
 import com.portpiratech.team4804.robot.commands.BridgeReset;
 import com.portpiratech.team4804.robot.commands.BridgeUp;
+import com.portpiratech.team4804.robot.commands.DriveToggle;
 import com.portpiratech.team4804.robot.commands.ExtendLift;
 import com.portpiratech.team4804.robot.commands.RetractLift;
 import com.portpiratech.team4804.robot.commands.SpeedDown;
@@ -47,8 +48,9 @@ public class OI {
 	    	break;
     	case DUMMY_MODE:
     		//Connect the buttons to commands (only on driver controller, no operator)
-    		driverController.getAButton().whileHeld(new ExtendLift());
-	    	driverController.getBButton().whileHeld(new RetractLift());
+    		driverController.getAButton().whenPressed(new DriveToggle());
+    		driverController.getLeftBumper().whileHeld(new ExtendLift());
+    		driverController.getRightBumper().whileHeld(new RetractLift());
 	    	driverController.getXButton().whenPressed(new SpeedUp());
 	    	driverController.getYButton().whenPressed(new SpeedDown());
 	    	

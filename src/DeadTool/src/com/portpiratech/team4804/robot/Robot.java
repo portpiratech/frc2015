@@ -33,8 +33,8 @@ public class Robot extends IterativeRobot {
 // ### Set robot mode here ### * Normal mode: operates normally														  ##
 // ########################### * Dummy mode: only uses one controller; only low-speed driving and pistons are enabled.##
 	
-//	public static RobotModes currentMode = RobotModes.DUMMY_MODE;
-	public static RobotModes currentMode = RobotModes.NORMAL_MODE;
+	public static RobotModes currentMode = RobotModes.DUMMY_MODE;
+//	public static RobotModes currentMode = RobotModes.NORMAL_MODE;
 	
 	
   //Initialization
