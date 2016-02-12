@@ -41,8 +41,8 @@ public class DriveTrain extends Subsystem {
 			break;
 			
 		case DUMMY_MODE:
-			lowSpeed = 0.5;
-			highSpeed = 0.6;
+			lowSpeed = 0.4;
+			highSpeed = 0.5;
 			break;
 		}
 		
