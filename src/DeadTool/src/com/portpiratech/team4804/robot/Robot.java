@@ -13,7 +13,6 @@ import com.portpiratech.team4804.robot.subsystems.PistonSubsystem;
 import com.portpiratech.team4804.robot.subsystems.ToteBridgePosSubsystem;
 import com.portpiratech.team4804.robot.subsystems.ToteConveyorSubsystem;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -45,19 +44,20 @@ public class Robot extends IterativeRobot {
     public static ToteConveyorSubsystem toteConveyorSubsystem;
     public static ToteBridgePosSubsystem toteBridgePosSubsystem;
     public static OI oi;
+    public static Vision vision;
     
 
-    CameraServer server;
+    //CameraServer server;
     
     public Robot() {
-        server = CameraServer.getInstance();
+        /*server = CameraServer.getInstance();
         server.setQuality(50);
         //the camera name (ex "cam0") can be found through the roborio web interface
         server.startAutomaticCapture("cam0");
         server = CameraServer.getInstance();
         server.setQuality(50);
         //the camera name (ex "cam0") can be found through the roborio web interface
-        server.startAutomaticCapture("cam0");
+        server.startAutomaticCapture("cam0");*/
     }
    
     /**
@@ -85,6 +85,7 @@ public class Robot extends IterativeRobot {
 	        toteBridgePosSubsystem = new ToteBridgePosSubsystem();
 	        toteConveyorSubsystem = new ToteConveyorSubsystem();
 	        oi = new OI();
+	        vision = new Vision();
 	        
 	        // instantiate the command used for the autonomous period
 	        autonomousCommand = new Autonomous();
@@ -97,6 +98,7 @@ public class Robot extends IterativeRobot {
         	driveTrain = new DriveTrain();
         	pistonSubsystem = new PistonSubsystem();
         	oi = new OI();
+        	vision = new Vision();
         	
         	// instantiate the command used for the autonomous period
 	        autonomousCommand = new Autonomous();
@@ -130,6 +132,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         log();
+        vision.frameProcess();
     }
     
     /**
