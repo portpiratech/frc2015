@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
     public static ToteConveyorSubsystem toteConveyorSubsystem;
     public static ToteBridgePosSubsystem toteBridgePosSubsystem;
     public static OI oi;
-    public static Vision vision;
+    public static VisionDeadTool vision;
     
 
     //CameraServer server;
@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot {
 	        toteBridgePosSubsystem = new ToteBridgePosSubsystem();
 	        toteConveyorSubsystem = new ToteConveyorSubsystem();
 	        oi = new OI();
-	        vision = new Vision();
+	        vision = new VisionDeadTool();
 	        
 	        // instantiate the command used for the autonomous period
 	        autonomousCommand = new Autonomous();
@@ -98,7 +98,7 @@ public class Robot extends IterativeRobot {
         	driveTrain = new DriveTrain();
         	pistonSubsystem = new PistonSubsystem();
         	oi = new OI();
-        	vision = new Vision();
+        	vision = new VisionDeadTool();
         	
         	// instantiate the command used for the autonomous period
 	        autonomousCommand = new Autonomous();
