@@ -13,8 +13,9 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionDeadTool {
+	
    //A structure to hold measurements of a particle
-  	public class ParticleReport implements Comparator<ParticleReport>, Comparable<ParticleReport>{
+  	public class ParticleReport implements Comparator<ParticleReport>, Comparable<ParticleReport> {
   		double PercentAreaToImageArea;
   		double Area;
   		double BoundingRectLeft;
@@ -39,7 +40,7 @@ public class VisionDeadTool {
 
    //Images
   	Image frame;
-  	Image binaryFrame;
+  	public Image binaryFrame;
   	Image binaryFrameToDisplay;
   	int imaqError;
   	int session;
@@ -61,6 +62,8 @@ public class VisionDeadTool {
     //CameraServer server;
     //int session;
     //Image frame;
+  	
+  	public double errorAimingX;
   	
   //methods
   	
@@ -165,6 +168,7 @@ public class VisionDeadTool {
 			SmartDashboard.putNumber("Distance", distanceFeet);
 			SmartDashboard.putNumber("Distance (in)", distanceFeet * 12.0);
 			SmartDashboard.putNumber("Launch Angle", launchAngle(distanceFeet*0.3048)); //1 ft = 0.3048 m
+			errorAimingX = computeErrorAimingX(binaryFrame, particles.elementAt(0));
 			
 			//Bounding rectangle params
 			int top = (int)particles.elementAt(0).BoundingRectTop;
@@ -185,10 +189,7 @@ public class VisionDeadTool {
 			SmartDashboard.putBoolean("IsTote", false);
 		}
 		
-		
-		
 		CameraServer.getInstance().setImage(frame);
-			
 		//Timer.delay(0.005);				// wait for a motor update time
 	}
 	
@@ -219,7 +220,7 @@ public class VisionDeadTool {
 	}
 	
     //Comparator function for sorting particles. Returns true if particle 1 is larger
-  	static boolean CompareParticleSizes(ParticleReport particle1, ParticleReport particle2){
+  	static boolean CompareParticleSizes(ParticleReport particle1, ParticleReport particle2) {
   		//we want descending sort order
   		return particle1.PercentAreaToImageArea > particle2.PercentAreaToImageArea;
   	}
@@ -231,8 +232,7 @@ public class VisionDeadTool {
   		return (Math.max(0, Math.min(100*(1-Math.abs(1-ratio)), 100)));
   	}
 
-  	double AreaScore(ParticleReport report)
-  	{
+  	double AreaScore(ParticleReport report) {
   		double boundingArea = (report.BoundingRectBottom - report.BoundingRectTop) * (report.BoundingRectRight - report.BoundingRectLeft);
   		//Tape is 7" edge so 49" bounding rect. With 2" wide tape it covers 24" of the rect.
   		return ratioToScore((49/24)*report.Area/boundingArea);
@@ -240,8 +240,7 @@ public class VisionDeadTool {
  	/**
  	 * Method to score if the aspect ratio of the particle appears to match the retro-reflective target. Target is 7"x7" so aspect should be 1
   	 */
- 	double AspectScore(ParticleReport report)
-  	{
+ 	double AspectScore(ParticleReport report) {
   		return ratioToScore(((report.BoundingRectRight-report.BoundingRectLeft)/(report.BoundingRectBottom-report.BoundingRectTop)));
   	}
  	
@@ -253,28 +252,54 @@ public class VisionDeadTool {
   	 * @param report The Particle Analysis Report for the particle
   	 * @return The estimated distance to the target in feet.
   	 */
- 	double computeDistance (Image image, ParticleReport report) {
+ 	public double computeDistance (Image image, ParticleReport report) {
   		double targetWidthInches, targetWidthFeet, targetWidthPixels, imageWidthPixels;
   		NIVision.GetImageSizeResult size = NIVision.imaqGetImageSize(image);
   		
+  		double leftPixels = report.BoundingRectLeft;
+  		double rightPixels = report.BoundingRectRight;
+  		//double topPixels = report.BoundingRectTop;
+  		//double bottomPixels = report.BoundingRectBottom;
+  		
   		imageWidthPixels = size.width;
-  		targetWidthPixels = report.BoundingRectRight - report.BoundingRectLeft; //units are pixels. right edge - left edge
-  		targetWidthInches = SmartDashboard.getNumber("targetWidthInches", 20);
-  		targetWidthFeet = targetWidthInches/12.0; //5.0/3.0;	//units are feet. target is 20 inches wide, or 20/12 feet wide
-		
+  		targetWidthPixels = rightPixels - leftPixels; //units are pixels
+  		targetWidthInches = 20; //inches
+  		targetWidthFeet = targetWidthInches/12.0;	//units are feet. target is 20 inches wide, or 20/12 feet wide
+  		
   		SmartDashboard.putNumber("PPI", targetWidthPixels / 20.0);
   		SmartDashboard.putString("computeDistance", targetWidthFeet + "*" + imageWidthPixels + "/(" + targetWidthPixels + "*2*tan(" + VIEW_ANGLE + " * 3.14159/(180*2)))");
   		
   		return targetWidthFeet*imageWidthPixels/(targetWidthPixels*2*Math.tan(VIEW_ANGLE*Math.PI/(180*2))); //Math.tan() takes angle in radians
   	}
  	
+ 	double computeErrorAimingX (Image image, ParticleReport report) {
+  		NIVision.GetImageSizeResult size = NIVision.imaqGetImageSize(image);
+  		double imageWidthPixels = size.width;
+  		
+  		double leftPixels = report.BoundingRectLeft;
+  		double rightPixels = report.BoundingRectRight;
+  		
+  		double centerPixels = (leftPixels+rightPixels)/2.0;
+  		
+  		//Axy = (Pxy - res/2)/(res/2)
+  		double leftAiming = (leftPixels - imageWidthPixels/2.0)/(imageWidthPixels/2.0);
+  		double rightAiming = (rightPixels - imageWidthPixels/2.0)/(imageWidthPixels/2.0);
+  		
+  		double centerAiming = (leftAiming+rightAiming)/2.0;
+  		
+  		SmartDashboard.putNumber("centerPixels", centerPixels);
+  		SmartDashboard.putNumber("centerAiming", centerAiming);
+  		
+  		return centerAiming;
+ 	}
+ 	
  	//calculate the angle the encoder should be
     public double launchAngle(double distance) {
     	final double g = 9.81; 	//acceleration due to gravity. (m/s^2)
     	
        //constants
-    	double v = 6; 			//initial velocity. need to test more to calculate. (m/s)
-    	double height = 2; 		//height of target. (m) might need to make variable based on angle?
+    	double v = 6.26; 		//initial velocity. (m/s)	Roughly 14 mph = 6.26 m/s
+    	double height = 1.6002; 		//height of target. (m)		On old robot, roughly 63 inches
     	
        //optimum launch angle so that ball passes through target at peak of trajectory
     	double numerator = Math.pow(v, 2) + Math.sqrt( Math.pow(v, 4) - g*(g*Math.pow(distance,2) + 2*height*Math.pow(v,2)) );

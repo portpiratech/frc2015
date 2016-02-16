@@ -1,6 +1,7 @@
 
 package com.portpiratech.team4804.robot;
 
+import com.portpiratech.team4804.robot.commands.AutoCenterCamera;
 import com.portpiratech.team4804.robot.commands.BridgeDown;
 import com.portpiratech.team4804.robot.commands.BridgeDrop;
 import com.portpiratech.team4804.robot.commands.BridgeReset;
@@ -10,6 +11,7 @@ import com.portpiratech.team4804.robot.commands.ExtendLift;
 import com.portpiratech.team4804.robot.commands.RetractLift;
 import com.portpiratech.team4804.robot.commands.SpeedDown;
 import com.portpiratech.team4804.robot.commands.SpeedUp;
+import com.portpiratech.team4804.robot.commands.TankDriveWithJoystick;
 import com.portpiratech.xbox360.XboxController;
 
 /**
@@ -33,6 +35,8 @@ public class OI {
     public static final int SOLENOID2_PORT1 = 2; //DoubleSolenoid
     public static final int SOLENOID2_PORT2 = 4; //DoubleSolenoid
     
+    public static final int WINDSHIELD_ID = 6; //CANTalon
+    
     public OI() {
     	switch(Robot.currentMode) {
     	case NORMAL_MODE:
@@ -43,6 +47,8 @@ public class OI {
 	    	operatorController.getYButton().whenPressed(new BridgeDown());
 	    	operatorController.getRightBumper().whenPressed(new BridgeReset());
 	    	operatorController.getLeftBumper().whenPressed(new BridgeDrop());
+	    	driverController.getStart().whenPressed(new AutoCenterCamera());
+	    	driverController.getSelect().whenPressed(new TankDriveWithJoystick());
 	    	//driverController.getRightBumper().whenPressed(new ArmsUp());
 	    	//driverController.getLeftBumper().whenPressed(new ArmsDown());
 	    	break;
@@ -53,6 +59,8 @@ public class OI {
     		driverController.getRightBumper().whileHeld(new RetractLift());
 	    	driverController.getXButton().whenPressed(new SpeedUp());
 	    	driverController.getYButton().whenPressed(new SpeedDown());
+	    	driverController.getStart().whenPressed(new AutoCenterCamera());
+	    	driverController.getSelect().whenPressed(new TankDriveWithJoystick());
 	    	
 	    	//kill switch
 	    	//operatorController.getAButton().whenPressed(new Disable());
