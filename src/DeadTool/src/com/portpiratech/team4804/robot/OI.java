@@ -9,9 +9,8 @@ import com.portpiratech.team4804.robot.commands.BridgeUp;
 import com.portpiratech.team4804.robot.commands.DriveToggle;
 import com.portpiratech.team4804.robot.commands.ExtendLift;
 import com.portpiratech.team4804.robot.commands.RetractLift;
-import com.portpiratech.team4804.robot.commands.SpeedDown;
-import com.portpiratech.team4804.robot.commands.SpeedUp;
 import com.portpiratech.team4804.robot.commands.TankDriveWithJoystick;
+import com.portpiratech.team4804.robot.commands.VisionToggle;
 import com.portpiratech.xbox360.XboxController;
 
 /**
@@ -55,12 +54,13 @@ public class OI {
     	case DUMMY_MODE:
     		//Connect the buttons to commands (only on driver controller, no operator)
     		driverController.getAButton().whenPressed(new DriveToggle());
-    		driverController.getLeftBumper().whileHeld(new ExtendLift());
-    		driverController.getRightBumper().whileHeld(new RetractLift());
-	    	driverController.getXButton().whenPressed(new SpeedUp());
-	    	driverController.getYButton().whenPressed(new SpeedDown());
+    		//driverController.getLeftBumper().whileHeld(new ExtendLift());
+    		//driverController.getRightBumper().whileHeld(new RetractLift());
+	    	//driverController.getXButton().whenPressed(new SpeedUp());
+	    	//driverController.getYButton().whenPressed(new SpeedDown());
 	    	driverController.getStart().whenPressed(new AutoCenterCamera());
 	    	driverController.getSelect().whenPressed(new TankDriveWithJoystick());
+	    	driverController.getBButton().whenPressed(new VisionToggle());
 	    	
 	    	//kill switch
 	    	//operatorController.getAButton().whenPressed(new Disable());

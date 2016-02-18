@@ -47,7 +47,7 @@ public class VisionDeadTool {
 	
    //Constants
   	NIVision.Range TOTE_HUE_RANGE = new NIVision.Range(40, 180);	//Default hue range for green-cyan LED
-  	NIVision.Range TOTE_SAT_RANGE = new NIVision.Range(0, 255);	//Default saturation range for green-cyan LED
+  	NIVision.Range TOTE_SAT_RANGE = new NIVision.Range(100, 255);	//Default saturation range for green-cyan LED
   	NIVision.Range TOTE_VAL_RANGE = new NIVision.Range(200, 255);	//Default value range for green-cyan LED
   	double AREA_MINIMUM = 0.5; //Default Area minimum for particle as a percentage of total image area
   	double LONG_RATIO = 2.22; //Tote long side = 26.9 / Tote height = 12.1 = 2.22

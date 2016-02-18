@@ -8,13 +8,13 @@ import com.portpiratech.xbox360.XboxController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Subsystem for controlling the two drive motors 
  */
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends PIDSubsystem {
 	private SpeedController left_motor,
 							right_motor;
 	private RobotDrive drive;
@@ -26,9 +26,12 @@ public class DriveTrain extends Subsystem {
 	
 	static final double SPEED_TOLERANCE = 0.075;
 	static int driveSetting = 0;
+	
+	public double p;
+	public double i, d;
 
 	public DriveTrain() {
-		super();
+		super(0.1, 0.0, 0.0);	//initial PID constants
 		left_motor = new Talon(OI.DRIVEMOTOR2_PORT);
 		right_motor = new Talon(OI.DRIVEMOTOR1_PORT);
 		
@@ -48,6 +51,9 @@ public class DriveTrain extends Subsystem {
 		
 		speedMult = highSpeed;
 		dpadMult = 0.8;
+		
+		getPIDController().setContinuous(false);
+		getPIDController().setAbsoluteTolerance(0.05);
 	}
 
 	/**
@@ -304,7 +310,7 @@ public class DriveTrain extends Subsystem {
     	
     	//center at error=0
     	
-    	if(Math.abs(error)>0.002) speed = error*speedMult*50; //if error<0, then speed<0. if error>0, then speed>0.
+    	if(Math.abs(error)>0.01) speed = error*speedMult*4; //if error<0, then speed<0. if error>0, then speed>0.
     	if(Math.abs(speed)>1) speed = Math.signum(speed);
     	
     	setMotor("L", -speed);
@@ -316,4 +322,30 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void reset() {
 	}
+
+	@Override
+	protected double returnPIDInput() {
+		return Robot.vision.errorAimingX;
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		setMotor("L", output);
+		setMotor("R", -output);
+	}
+	
+	public void enablePID() {
+		getPIDController().enable();
+	}
+	
+	public void enablePID(boolean enable) {
+		if(enable) {
+			getPIDController().enable();
+		} else {
+			getPIDController().disable();
+		}
+	}
+	
+	/*@Override
+	protected bool getEnable*/
 }

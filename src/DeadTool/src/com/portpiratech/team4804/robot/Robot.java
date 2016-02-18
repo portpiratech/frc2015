@@ -12,6 +12,7 @@ import com.portpiratech.team4804.robot.subsystems.DriveTrain;
 import com.portpiratech.team4804.robot.subsystems.PistonSubsystem;
 import com.portpiratech.team4804.robot.subsystems.ToteBridgePosSubsystem;
 import com.portpiratech.team4804.robot.subsystems.ToteConveyorSubsystem;
+import com.portpiratech.team4804.robot.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -39,13 +40,14 @@ public class Robot extends IterativeRobot {
   //Initialization
     Command autonomousCommand;
     
+    //Subsystems and classes
     public static PistonSubsystem pistonSubsystem;
     public static DriveTrain driveTrain;
     public static ToteConveyorSubsystem toteConveyorSubsystem;
     public static ToteBridgePosSubsystem toteBridgePosSubsystem;
+    public static VisionSubsystem visionSubsystem;
     public static OI oi;
     public static VisionDeadTool vision;
-    
 
     //CameraServer server;
     
@@ -84,6 +86,7 @@ public class Robot extends IterativeRobot {
 	        pistonSubsystem = new PistonSubsystem();
 	        toteBridgePosSubsystem = new ToteBridgePosSubsystem();
 	        toteConveyorSubsystem = new ToteConveyorSubsystem();
+	        visionSubsystem = new VisionSubsystem();
 	        oi = new OI();
 	        vision = new VisionDeadTool();
 	        
@@ -97,6 +100,7 @@ public class Robot extends IterativeRobot {
         case DUMMY_MODE:
         	driveTrain = new DriveTrain();
         	pistonSubsystem = new PistonSubsystem();
+        	visionSubsystem = new VisionSubsystem();
         	oi = new OI();
         	vision = new VisionDeadTool();
         	
@@ -132,7 +136,6 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         log();
-        vision.frameProcess();
     }
     
     /**
