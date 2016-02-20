@@ -9,11 +9,13 @@ package com.portpiratech.team4804.robot;
 
 import com.portpiratech.team4804.robot.commands.Autonomous;
 import com.portpiratech.team4804.robot.subsystems.DriveTrain;
+import com.portpiratech.team4804.robot.subsystems.EncoderSubsystem;
 import com.portpiratech.team4804.robot.subsystems.PistonSubsystem;
 import com.portpiratech.team4804.robot.subsystems.ToteBridgePosSubsystem;
 import com.portpiratech.team4804.robot.subsystems.ToteConveyorSubsystem;
 import com.portpiratech.team4804.robot.subsystems.VisionSubsystem;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -46,9 +48,11 @@ public class Robot extends IterativeRobot {
     public static ToteConveyorSubsystem toteConveyorSubsystem;
     public static ToteBridgePosSubsystem toteBridgePosSubsystem;
     public static VisionSubsystem visionSubsystem;
+    public static EncoderSubsystem encoderSubsystem;
     public static OI oi;
     public static VisionDeadTool vision;
-
+    
+    public static CANTalon cannonEncoderMotor;
     //CameraServer server;
     
     public Robot() {
@@ -101,8 +105,12 @@ public class Robot extends IterativeRobot {
         	driveTrain = new DriveTrain();
         	pistonSubsystem = new PistonSubsystem();
         	visionSubsystem = new VisionSubsystem();
+        	encoderSubsystem = new EncoderSubsystem();
         	oi = new OI();
         	vision = new VisionDeadTool();
+        	
+        	//encoder thing
+        	cannonEncoderMotor = new CANTalon(6);
         	
         	// instantiate the command used for the autonomous period
 	        autonomousCommand = new Autonomous();

@@ -14,24 +14,22 @@ public class AutoCenterCamera extends Command {
         requires(Robot.driveTrain);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        SmartDashboard.putNumber("Proportional (p) constant", Robot.driveTrain.p);
-    	SmartDashboard.putNumber("Proportional (i) constant", Robot.driveTrain.i);
-    	SmartDashboard.putNumber("Proportional (d) constant", Robot.driveTrain.d);
+        SmartDashboard.putNumber("Proportional (p) drive constant", Robot.driveTrain.p);
+    	SmartDashboard.putNumber("Proportional (i) drive constant", Robot.driveTrain.i);
+    	SmartDashboard.putNumber("Proportional (d) drive constant", Robot.driveTrain.d);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.driveTrain.enablePID(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.enablePID(true);
-    	Robot.driveTrain.p = SmartDashboard.getNumber("Proportional (p) constant");
-    	Robot.driveTrain.i = SmartDashboard.getNumber("Proportional (i) constant");
-    	Robot.driveTrain.d = SmartDashboard.getNumber("Proportional (d) constant");
+    	Robot.driveTrain.p = SmartDashboard.getNumber("Proportional (p) drive constant");
+    	Robot.driveTrain.i = SmartDashboard.getNumber("Proportional (i) drive constant");
+    	Robot.driveTrain.d = SmartDashboard.getNumber("Proportional (d) drive constant");
     	Robot.driveTrain.getPIDController().setPID(Robot.driveTrain.p, Robot.driveTrain.i, Robot.driveTrain.d);
-    	
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

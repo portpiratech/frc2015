@@ -1,7 +1,7 @@
 package com.portpiratech.team4804.robot.subsystems;
 
 import com.portpiratech.team4804.robot.Robot;
-import com.portpiratech.team4804.robot.commands.VisionProcess;
+import com.portpiratech.team4804.robot.commands.VisionDisplay;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -13,13 +13,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class VisionSubsystem extends Subsystem {
 	
 	public static boolean visionProcessing;
+	//long lastFrameProcessTimeMs;
+	//long captureIntervalMs;
 	
 	public VisionSubsystem() {
 		visionProcessing = false;
+//		lastFrameProcessTimeMs = 0;
+//		captureIntervalMs = 200;
 	}
 	
 	public void initDefaultCommand() {
-		setDefaultCommand(new VisionProcess());
+		setDefaultCommand(new VisionDisplay());
 	}
 
 	/**
@@ -29,6 +33,13 @@ public class VisionSubsystem extends Subsystem {
 	}
 	
 	public void frameProcess() {
-		Robot.vision.frameProcess();
+		//if(System.currentTimeMillis() - lastFrameProcessTimeMs >= captureIntervalMs) {
+			Robot.vision.frameProcess();
+			//lastFrameProcessTimeMs = System.currentTimeMillis();
+		//}
+	}
+	
+	public void frameAutoDisplay() {
+		Robot.vision.frameAutoDisplay();
 	}
 }

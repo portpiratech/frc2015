@@ -7,11 +7,14 @@ import com.portpiratech.team4804.robot.commands.BridgeDrop;
 import com.portpiratech.team4804.robot.commands.BridgeReset;
 import com.portpiratech.team4804.robot.commands.BridgeUp;
 import com.portpiratech.team4804.robot.commands.DriveToggle;
+import com.portpiratech.team4804.robot.commands.EncoderReset;
 import com.portpiratech.team4804.robot.commands.ExtendLift;
 import com.portpiratech.team4804.robot.commands.RetractLift;
 import com.portpiratech.team4804.robot.commands.TankDriveWithJoystick;
 import com.portpiratech.team4804.robot.commands.VisionToggle;
 import com.portpiratech.xbox360.XboxController;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -62,8 +65,12 @@ public class OI {
 	    	driverController.getSelect().whenPressed(new TankDriveWithJoystick());
 	    	driverController.getBButton().whenPressed(new VisionToggle());
 	    	
+	    	driverController.getLeftBumper().whenPressed(new EncoderReset());
+	    	
 	    	//kill switch
 	    	//operatorController.getAButton().whenPressed(new Disable());
+	    	
+	    	SmartDashboard.putData("VisionToggle", new VisionToggle());
     		break;
     	}
     }

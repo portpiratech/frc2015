@@ -24,14 +24,16 @@ public class DriveTrain extends PIDSubsystem {
 	static double highSpeed;
 	static double dpadMult;
 	
-	static final double SPEED_TOLERANCE = 0.075;
+	static final double SPEED_TOLERANCE = 0.1;
 	static int driveSetting = 0;
 	
-	public double p;
-	public double i, d;
+	public double p, i, d;
 
 	public DriveTrain() {
-		super(0.1, 0.0, 0.0);	//initial PID constants
+		super(0.6, 0.0, 0.0);	//initial PID constants
+		p = getPIDController().getP();
+		i = getPIDController().getI();
+		d = getPIDController().getD();
 		left_motor = new Talon(OI.DRIVEMOTOR2_PORT);
 		right_motor = new Talon(OI.DRIVEMOTOR1_PORT);
 		
